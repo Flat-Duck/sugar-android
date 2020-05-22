@@ -1,0 +1,107 @@
+<resources>
+    <string name="app_name">Sugar App</string>
+    <string name="pref_notification_message_value">Hey… Lets drink some water…</string>
+    <string name="add_info_text">Please provide some information to customize the experience for you…!!</string>
+    <string name="str_continue">Continue</string>
+    <string name="enter_your_name_hint">Enter your name</string>
+    <string name="age_hint">Enter your age</string>
+    <string name="weight_hint">Enter your weight in Kg</string>
+    <string name="custom_intake_hint">Enter your custom intake target in ml</string>
+    <string name="workout_hint">Your daily work out time in min/day</string>
+    <string name="wakeup_hint">Your wake up time</string>
+    <string name="sleeping_hint">Your Sleep time</string>
+    <string name="tagline_text">Lets keep you hydrated…</string>
+    <string name="get_started">Get Started</string>
+    <string name="edit_info_text">Edit Your Info</string>
+    <string name="update">Update</string>
+    <string name="timer_icon">Update</string>
+    <string name="notif_setting_header">Notification Settings</string>
+    <string name="notif_messsage_hint">Notification Message</string>
+    <string name="notif_tone_hint">Notification Tone</string>
+    <string name="notif_freq_hint">Notification Frequency</string>
+    <string name="walkthrough_text_one">Water is 60 percent of your body weight. Your body depends on water to
+        survive.
+    </string>
+    <string name="walkthough_text_two">Lack of water can lead to dehydration. Even mild dehydration can drain you and
+        make you tired.
+    </string>
+    <string name="walkthrough_text_three">Every cell, tissue and organ in your body needs water to work properly.
+    </string>
+    <string name="add">أضافة</string>
+    <string name="cure_text">العلاج</string>
+    <string name="measure_time">فترة القياس</string>
+    <string name="mesure_timer">وقت القياس</string>
+    <string name="measure_value">قيمة قياس السكر</string>
+
+    <string name="breakFast">الافطار</string>
+    <string name="lunch">الغذاء</string>
+    <string name="dinner">العشاء</string>
+    <string name="timeFrom7_9">الساعة (7-9 صباحا) :</string>
+    <string name="timeFrom10">الساعة (10 صباحا)</string>
+    <string name="timeFrom4">الساعة (4 مساءا)</string>
+    <string name="timeFromSleep">قبل النوم</string>
+
+
+    <string name="op1label">الخيار الاول:</string>
+    <string name="op2label">الخيار التاني:</string>
+    <string name="op3label">الخيار الثالث:</string>
+    <string name="op4label">الخيار الرابع:</string>
+
+    <string name="op1BF">"رغيف خبز شعير \n 2 ملاعق اكل تن بدون زيت \n قطعة فاكهة \n كوب حليب خالي الدسم "</string>
+    <string name="op2BF">"(1/3)خبز شعير \n بيضة او قطعة صغيرة جبن خالية الدسم \n كوب حليب خالي الدسم \n قطعة فاكهة"</string>
+    <string name="op3BF">"(1/2) كوب شاي مع الحليب خالي الدسم \n شريحة خبز شعير \n (1/4)كوب جبن بدون دسم او بيضة واحدة \nطماطم  وخيار حسب الرغبة .</string>
+    <string name="op4BF">"كوب عصير او مشروب دايت \n"</string>
+
+    <string name="op1L">"صحن سلطة خضراء مع كوب ماء حسب الرغبة جرام ). \n (1/3) كوب شوربة خضار . \n (1/2)كوب خضار مسلوقة ,قطعة فاكهة."</string>
+    <string name="op2L">"صحن سلطة خضراء مع كوب ماء حسب الرغبة. \n (1/3) كوب أرز. \n (1/3)كوب خضار مسلوقة. \n لحم ابيض حجم نص الكف. \n قطعة فاكهة. \n 5 حبات زيتون."</string>
+    <string name="op3L">"صحن سلطة خضراء مع كوب ماء حسب الرغبة. \n 5 حبات زيتون. \n (1/2) كوب كسكسي أو مكرونة. \n قطعة لحم احمر خالي الدهن أو بيض ,حجم نص الكف . \n قطعة فاكهة او كوب عصير طبيعي." </string>
+    <string name="op4L">"صحن سلطة مشكل مع كوب ماء حسب الرغبة. \n قطعة لحم احمر خالي الدهن أو  سمك او بيض ,حجم نص الكف . \n (3/2) خبز شعير. \n قطعة فاكهة . \n (1/2)كوب خضار مسلوقة ."</string>
+    <string name="op5L">"كوب شاي بدون سكر أو قطعة فاكهة أو صحن سبطة مشكل مع كوب ماء حسب الرغبة.\n"</string>
+
+    <string name="op1D">"صحن سلطة مشكل مع كوب ماء حسب الرغبة. \n بحم او دجاج مشوي او مسلوق ,حجم نصف الكف. \n (1/3)شوربة خضار.  \n قطعة فاكهة."</string>
+    <string name="op2D">"صحن سلطة مع كوب ماء حسب الرغبة. \n (3/1)كوب أرز او (2/1) كوب خضار مسلوق. \n (2/1) كوب جبن معصورة. \n قطعة فاكهة حسب الرغبة."</string>
+    <string name="op3D">"صحن سلطة مشكل  مع كوب ماء حسب الرغبة. \n قطعة سمك او دجاج. \n (2/1) كوب خضار مسلوق. \n قطعة فاكهة."</string>
+    <string name="op4D">"كوب حليب او زبادي خالي الدسم"</string>
+
+
+    <string name="title_activity_food">"النظام الغذائي الصحي لتخفيف الوزن لمريض السكري"</string>
+    <string name="action_settings">Settings</string>
+    <string name="before_sleep">قبل النوم</string>
+    <string name="evening">المساء</string>
+    <string name="noon">الظهر</string>
+    <string name="morning">الصباح</string>
+    <string name="period">الفترة</string>
+    <string name="glycemia">السكر في الدم</string>
+    <string name="insulin">انسولين</string>
+    <string name="coma">:</string>
+    <string name="insulin_value">كمية العلاج</string>
+    <string name="scale">Underweight:    Less than 20\nNormal Weight:       20 - 25\nOverweight:
+        25-30\nObese:                     30 - 40\nMorbidly Obese: More than 40</string>
+    <string name="EmptyString"></string>
+
+    <string name="h1_label">لاباس</string>
+    <string name="h1_msg">لاباسمستوى السكر عال قليلا استعمل النصائح لاجل ضبط سكر دمك </string>
+    <string name="h2_label">مرتفع </string>
+    <string name="h2_msg">مستوى السكر لديك مرتفع يجب ان تضبط مستويات سكر الدم </string>
+    <string name="h3_label">مرتفع جدا </string>
+    <string name="h3_msg">مستوى السكر لديك مرتفع  جدا يجب ان تضبط  مستويات سكر الدم </string>
+    <string name="h_danger_msg">مستوى السكر لديك عال جدا  تحتاج رعاية طبية فورا </string>
+    <string name="l1_label">منخفض </string>
+    <string name="l1_msg">مستوى السكر لديك منخفض قليلا عليك أن تأكل </string>
+    <string name="l2_label">منخفض جدا </string>
+    <string name="l2_msg">مستوى السكر لديك منخفض  جدا عليك أن تأكل فورا </string>
+    <string name="danger_label">انت في حاله خطره  </string>
+    <string name="l_danger_msg">مستوى السكر لديك منخفض جدا  تحتاج رعاية طبية فورا. </string>
+    <string name="advice_msg">اشرب عصيرا او تناول لوح شكلاطة حتى الحصول علي الرعاية الصحية </string>
+    <string name="normal_label">طبيعي </string>
+    <string name="normal_msg">مستوى السكر لديك في حالة طبيعية  استعمل النصائح .والعلاج لاجل ان تستمر على ذلك</string>
+
+    <string name="before_eat">قبل الاكل</string>
+    <string name="after_eat">بعد الاكل</string>
+
+    <string name="cure_milk">انسولين حليب</string>
+    <string name="cure_insulin">انسولين ماء</string>
+    <string name="cure_sugar">حبة سكر</string>
+    <string name="cure_pill">حبةمنظم</string>
+    <string name="cure_nothing">لاشيئ</string>
+</resources>
