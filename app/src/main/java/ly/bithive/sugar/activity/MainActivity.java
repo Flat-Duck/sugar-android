@@ -1,9 +1,13 @@
 package ly.bithive.sugar.activity;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.annotation.SuppressLint;
+import android.app.TimePickerDialog;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.content.Context;
@@ -13,12 +17,15 @@ import android.widget.Button;
 import android.os.Handler;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TimePicker;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
+import java.util.Calendar;
 
 import ly.bithive.sugar.util.SetupActions;
 import ly.bithive.sugar.util.SqliteHelper;
@@ -32,12 +39,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextInputEditText txtTime;
 //    TextView tvSelectedItem;
   //  ImageButton setTimeBtn;
+private long wakeupTime;
     Button addBtn;
-  //  private int mHour, mMinute;
+    private int mHour, mMinute;
     TextInputLayout etInsulin, etGlycemia;
     private Context context;
     SetupActions setupActions;
     SqliteHelper sqliteHelper;
+    ImageButton btnWakeUpTime,btnSleepTime;
+    TextInputLayout etWakeUpTime;
     private int totalIntake = 0;
     private SharedPreferences sharedPref;
     private boolean doubleBackToExitPressedOnce = false;
@@ -68,11 +78,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                timePickerDialog.show();
 //            }
 //        });
-
+        btnWakeUpTime = findViewById(R.id.btnWakeUpTime);
+        btnWakeUpTime.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onClick(View view) {
+                final android.icu.util.Calendar c = android.icu.util.Calendar.getInstance();
+                mHour = c.get(android.icu.util.Calendar.HOUR_OF_DAY);
+                mMinute = c.get(android.icu.util.Calendar.MINUTE);
+                TimePickerDialog mTimePicker = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
+                    @SuppressLint("DefaultLocale")
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                        setWakeUpTime(selectedHour,selectedMinute);
+                        Calendar time = Calendar.getInstance();
+                        time.set(Calendar.HOUR_OF_DAY, selectedHour);
+                        time.set(Calendar.MINUTE, selectedMinute);
+                        wakeupTime = time.getTimeInMillis();
+                        etWakeUpTime.getEditText().setText(String.format("%02d:%02d", selectedHour, selectedMinute));
+                    }
+                }, mHour, mMinute, true);
+                mTimePicker.setTitle("Select Wakeup Time");
+                mTimePicker.show();
+            }
+        });
+        etWakeUpTime = findViewById(R.id.etWakeUpTime);
         measureSpinnerTime = view.findViewById(R.id.spPeriod);
         measureSpinnerCure = view.findViewById(R.id.spCure);
         etGlycemia = view.findViewById(R.id.etGlycemia);
-        etInsulin = view.findViewById(R.id.etInsulin);
+      //  etInsulin = view.findViewById(R.id.etInsulin);
         addBtn = view.findViewById(R.id.btnAdd);
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,7 +178,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         dialog.setContentView(view);
         dialog.show();
     }
-
+    private void setWakeUpTime(int selectedHour, int selectedMinute) {
+    }
     private void showAlertMsg(int ttl, int msg, String color) {
         int bg;
         switch (color) {

@@ -1,67 +1,68 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".activity.BmiActivity">
 
-<EditText
-    android:layout_width="100dp"
-    android:layout_height="wrap_content"
-    android:inputType="number|numberDecimal"
-    android:ems="6"
-    android:id="@+id/weightNum"
-    android:layout_alignParentTop="true"
-    android:layout_alignParentRight="true"
-    android:layout_alignParentEnd="true"
-    android:layout_marginTop="32dp"
-    android:textSize="20dp" />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/weightNum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:ems="6"
+        android:textSize="20sp">
 
-<EditText
-    android:layout_width="100dp"
-    android:layout_height="wrap_content"
-    android:inputType="number|numberDecimal"
-    android:ems="6"
-    android:id="@+id/heightNum"
-    android:layout_marginTop="32dp"
-    android:layout_below="@+id/weightNum"
-    android:layout_alignRight="@+id/calcBMI"
-    android:layout_alignEnd="@+id/calcBMI"
-    android:textSize="20dp" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Weight in kg"
+            android:inputType="number|numberDecimal" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-<Button
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Calculate BMI"
-    android:id="@+id/calcBMI"
-    android:layout_marginTop="19dp"
-    android:onClick="calculateClickHandler"
-    android:layout_below="@+id/heightNum"
-    android:layout_alignParentRight="true"
-    android:layout_alignParentEnd="true"
-    android:textSize="20dp" />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/heightNum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:ems="6"
+        android:textSize="20sp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Height in cm"
+            android:inputType="number|numberDecimal" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <Button
+        android:id="@+id/calcBMI"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="19dp"
+        android:onClick="calculateClickHandler"
+        android:text="Calculate BMI"
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/resultLabel"
+        android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/calcBMI"
-        android:layout_alignTop="@+id/weightNum"
-
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@+id/weightNum"
-        android:text="888888"
+        android:text="Result"
         android:textColor="#000000"
-
         android:textSize="20sp" />
 
     <com.ekn.gruzer.gaugelibrary.HalfGauge
         android:id="@+id/speedView"
+        android:layout_gravity="center_horizontal|center_vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/calcBMI"
-        android:layout_marginTop="44dp"/>
+        android:layout_marginTop="44dp" />
 
-</RelativeLayout>
+
+</LinearLayout>
