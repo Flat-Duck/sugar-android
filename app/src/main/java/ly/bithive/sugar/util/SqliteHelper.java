@@ -7,6 +7,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import static ly.bithive.sugar.util.COMMON.BMI_HEIGHT_KEY;
+import static ly.bithive.sugar.util.COMMON.BMI_READING_KEY;
+import static ly.bithive.sugar.util.COMMON.BMI_WEIGHT_KEY;
+
 public class SqliteHelper extends SQLiteOpenHelper {
 
 
@@ -15,6 +19,7 @@ public class SqliteHelper extends SQLiteOpenHelper {
     private static String DATABASE_NAME = "Sugar";
     private static final String TABLE_STATS = "stats";
     private static final String TABLE_MEASURE = "measure";
+    private static final String TABLE_BMI = "bmi";
     private static final String KEY_ID = "id";
     private static final String KEY_DATE = "date";
     private static final String KEY_TIME = "time";
@@ -52,19 +57,42 @@ public class SqliteHelper extends SQLiteOpenHelper {
             + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_DATE + " TEXT UNIQUE,"
             + KEY_INTOOK + " INT," + KEY_TOTAL_INTAKE + " INT" + ")");
 
+    private String CREATE_BMI_TABLE = ("CREATE TABLE " + TABLE_BMI + "("
+            + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + BMI_READING_KEY + " TEXT ,"
+            + BMI_WEIGHT_KEY + " TEXT ,"
+            + BMI_HEIGHT_KEY + " INT,"
+            + KEY_DATE + " TEXT" + ")");
+
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(CREATE_STATS_TABLE);
         sqLiteDatabase.execSQL(CREATE_MEASURE_TABLE);
+        sqLiteDatabase.execSQL(CREATE_BMI_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_STATS);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_MEASURE);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_BMI);
         onCreate(sqLiteDatabase);
     }
 
+    public long addBMI(String reading,String height,String weight, String date) {
+        if (checkExistance(date) == 0) {
+            ContentValues values = new ContentValues();
+            values.put(BMI_READING_KEY, reading);
+            values.put(BMI_WEIGHT_KEY, weight);
+            values.put(BMI_HEIGHT_KEY, height);
+            values.put(KEY_DATE, date);
+            SQLiteDatabase db = this.getWritableDatabase();
+            long response = db.insert(TABLE_STATS, null, values);
+            db.close();
+            return response;
+        }
+        return -1;
+    }
 
     public long addAll(String date, int intook, int totalintake) {
         if (checkExistance(date) == 0) {
@@ -120,6 +148,12 @@ public class SqliteHelper extends SQLiteOpenHelper {
 
     }
 
+    public Cursor getAllBMI() {
+        String selectQuery = "SELECT * FROM " + TABLE_BMI;
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery(selectQuery, null);
+    }
+
     public Cursor getAllStats() {
         String selectQuery = "SELECT * FROM " + TABLE_STATS;
         SQLiteDatabase db = this.getReadableDatabase();
@@ -143,13 +177,13 @@ public class SqliteHelper extends SQLiteOpenHelper {
     }
 
 
-    public long insertShot(String date,String time, String glycemia, String insulin, String period, String cure) {
+    public long insertShot(String date,String time, String glycemia, String period, String cure) {
         debugInsert(time);
         ContentValues values = new ContentValues();
         values.put(KEY_DATE, date);
         values.put(KEY_TIME, time);
         values.put(KEY_GLYCEMIA, glycemia);
-        values.put(KEY_INSULIN, insulin);
+      //  values.put(KEY_INSULIN, insulin);
         values.put(KEY_CURE, cure);
         values.put(KEY_PERIOD, period);
         SQLiteDatabase db = this.getWritableDatabase();

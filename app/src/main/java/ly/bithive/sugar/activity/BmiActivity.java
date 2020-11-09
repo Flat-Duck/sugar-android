@@ -16,13 +16,15 @@ import android.widget.TextView;
 import com.ekn.gruzer.gaugelibrary.HalfGauge;
 import com.ekn.gruzer.gaugelibrary.Range;
 import com.github.anastr.speedviewlib.SpeedView;
+import com.google.android.material.textfield.TextInputLayout;
 
 import ly.bithive.sugar.R;
 
 public class BmiActivity extends AppCompatActivity {
-    EditText weightNum, heightNum;
+    TextInputLayout weightNum, heightNum;
     TextView resultLabel;
     HalfGauge halfGauge;
+    int color;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,26 +32,10 @@ public class BmiActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bmi);
 
         halfGauge = findViewById(R.id.speedView);
-        weightNum = (EditText) findViewById(R.id.weightNum);
-        heightNum = (EditText) findViewById(R.id.heightNum);
+        weightNum =  findViewById(R.id.weightNum);
+        heightNum =  findViewById(R.id.heightNum);
         resultLabel = (TextView) findViewById(R.id.resultLabel);
-//        if (savedInstanceState == null) {
-//            getSupportFragmentManager().beginTransaction()
-//                    .add(R.id.container, new PlaceholderFragment())
-//                    .commit();
-//        }
-
 setUpGauge();
-       // speedView.setUnit("BMI");
-//        speedView.setStartDegree(0);
-//        speedView.setEndDegree(180);
-//        speedView.setWithTremble(false);
-//        speedView.setMinSpeed(9);
-//        speedView.setMaxSpeed(65);
-
-        //speedView.setcolor
-
-
     }
 
     private void setUpGauge() {
@@ -93,32 +79,31 @@ setUpGauge();
             double weight = 0;
             double height = 0;
 
-            if (!(weightNum.getText().toString().equals(""))) {
-                weight = Double.parseDouble(weightNum.getText().toString());
+            if (!(weightNum.getEditText().getText().toString().equals(""))) {
+                weight = Double.parseDouble(weightNum.getEditText().getText().toString());
             }
 
-            if (!(heightNum.getText().toString().equals(""))) {
-                height = Double.parseDouble(heightNum.getText().toString());
+            if (!(heightNum.getEditText().getText().toString().equals(""))) {
+                height = Double.parseDouble(heightNum.getEditText().getText().toString());
+                if(height > 100){
+                    height = height/100;
+                }
             }
 
             double bmi;
 
-            //weight = weight ;
-            //height = height * height;
             bmi = calculateBMI(weight, height);
-            //  }
 
             // round to 1 digit
             double newBMI = Math.round(bmi * 10.0) / 10.0;
-            DecimalFormat f = new DecimalFormat("##.0");
+          //  DecimalFormat f = new DecimalFormat("##.0");
 
             // interpret the meaning of the bmi value
             String bmiInterpretation = interpretBMI(newBMI);
-
+            resultLabel.setTextColor(color);
             // now set the value in the results text
             resultLabel.setText("BMI Score = " + newBMI + "\n" + bmiInterpretation);
-           // speedView.speedTo((float) newBMI,1500);
-            //speedView.setUnitUnderSpeedText(true);
+
             halfGauge.setValue(newBMI);
         }
     }
@@ -132,17 +117,23 @@ setUpGauge();
     private String interpretBMI(double bmi) {
 
         if (bmi == 0) {
-            return "Enter your details";
+            color = R.color.red;
+            return "الرجاء ادخال بياناتك";
         } else if (bmi < 18.5) {
-            return "You are underweight";
+            color = R.color.blue;
+            return "(نقص في الوزن تحتاج الى زيادة الوزن للوصول الي الوزن الطبيعي)";
         } else if (bmi < 25) {
-            return "You are normal weight";
+            color = R.color.green;
+            return "( ممتاز وزنك مثالي)";
         } else if (bmi < 30) {
-            return "You are overweight";
+            color = R.color.ballReleaseColor;
+            return "(زيادة في الوزن تحتاج لانقاص الوزن للوصول الي الوزن الطبيعي)";
         } else if (bmi < 40) {
-            return "You are obese";
+            color = R.color.red;
+            return "(تعاني من سمنة مفرطة  تحتاج لانقاص  الوزن للوصول الي الوزن الطبيعي)";
         } else {
-            return "You are severely obese";
+            color = R.color.red;
+            return "(تعاني من سمنة مفرطة جدا تحتاج لاشراف طبيب تغذية) ";
         }
     }
 

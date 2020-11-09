@@ -12,7 +12,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.LoginActivity"/>
+        <activity android:name=".activity.StartActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.MessagingActivity">
+
+        </activity>
+        <activity android:name=".activity.SportActivity" />
+        <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.BmiActivity" />
         <activity android:name=".activity.ReportActivity" />
         <activity
@@ -24,13 +35,7 @@
         <activity android:name=".activity.WalkThroughActivity" />
         <activity android:name=".activity.ShotActivity" />
         <activity android:name=".activity.WaterActivity" />
-        <activity android:name=".activity.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".activity.MainActivity"></activity>
 
         <receiver android:name=".notification.NotifierReceiver" />
         <receiver android:name=".notification.BootReceiver">

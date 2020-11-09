@@ -1,14 +1,21 @@
 package ly.bithive.sugar.activity;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.text.Html;
+import android.view.Gravity;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.content.Context;
 import android.content.Intent;
@@ -56,29 +63,13 @@ private long wakeupTime;
     public void showBottomSheetDialog() {
         View view = getLayoutInflater().inflate(R.layout.bottom_sheet_shot_fragment, null);
         final BottomSheetDialog dialog = new BottomSheetDialog(this);
+        etWakeUpTime = view.findViewById(R.id.etWakeUpTime);
+        measureSpinnerTime = view.findViewById(R.id.spPeriod);
+        measureSpinnerCure = view.findViewById(R.id.spCure);
+        etGlycemia = view.findViewById(R.id.etGlycemia);
+        addBtn = view.findViewById(R.id.btnAdd);
 
-
-//        setTimeBtn = view.findViewById(R.id.setTimeBTN);
-//        txtTime = view.findViewById(R.id.etWakeUpTime);
-//
-//        setTimeBtn.setOnClickListener(new View.OnClickListener() {
-//            @RequiresApi(api = Build.VERSION_CODES.N)
-//            @Override
-//            public void onClick(View view) {
-//                final Calendar c = Calendar.getInstance();
-//                mHour = c.get(Calendar.HOUR_OF_DAY);
-//                mMinute = c.get(Calendar.MINUTE);
-//                TimePickerDialog timePickerDialog = new TimePickerDialog(context,
-//                        new TimePickerDialog.OnTimeSetListener() {
-//                            @Override
-//                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-//                                setTime(hourOfDay, minute);
-//                            }
-//                        }, mHour, mMinute, true);
-//                timePickerDialog.show();
-//            }
-//        });
-        btnWakeUpTime = findViewById(R.id.btnWakeUpTime);
+        btnWakeUpTime = view.findViewById(R.id.btnWakeUpTime);
         btnWakeUpTime.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
@@ -102,17 +93,18 @@ private long wakeupTime;
                 mTimePicker.show();
             }
         });
-        etWakeUpTime = findViewById(R.id.etWakeUpTime);
-        measureSpinnerTime = view.findViewById(R.id.spPeriod);
-        measureSpinnerCure = view.findViewById(R.id.spCure);
-        etGlycemia = view.findViewById(R.id.etGlycemia);
+
       //  etInsulin = view.findViewById(R.id.etInsulin);
-        addBtn = view.findViewById(R.id.btnAdd);
+
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int glycemia = Integer.parseInt(etGlycemia.getEditText().getText().toString());
-                sqliteHelper.insertShot(Helper.getCurrentDate(), Helper.getCurrentTime(), etGlycemia.getEditText().getText().toString(), etInsulin.getEditText().getText().toString(), measureSpinnerTime.getSelectedItem().toString(), measureSpinnerCure.getSelectedItem().toString());
+                sqliteHelper.insertShot(Helper.getCurrentDate(), Helper.getCurrentTime(),
+                        etGlycemia.getEditText().getText().toString(),
+                       // etInsulin.getEditText().getText().toString(),
+                        measureSpinnerTime.getSelectedItem().toString(),
+                        measureSpinnerCure.getSelectedItem().toString());
                 boolean exit = false;
                 if (glycemia > COMMON.DANGER_HIGH) {
                     showAlertMsg(R.string.danger_label, R.string.h_danger_msg, "red");
@@ -216,6 +208,18 @@ private long wakeupTime;
         sqliteHelper = new SqliteHelper(this);
         helper = new Helper();
         context = this;
+     //   Button test_button = (Button) findViewById(R.id.button_test);
+
+
+//        test_button.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
+
+
 
         sharedPref = getSharedPreferences(COMMON.USERS_SHARED_PREF, COMMON.PRIVATE_MODE);
         totalIntake = sharedPref.getInt(COMMON.TOTAL_INTAKE, 0);
@@ -284,8 +288,71 @@ private long wakeupTime;
     }
 
     private void showStatActivity() {
-        startActivity(new Intent(MainActivity.this, StatsActivity.class));
+       // startActivity(new Intent(MainActivity.this, StatsActivity.class));
+        showSportsAlert();
     }
+
+    private void showSportsAlert() {
+
+        //Create LinearLayout Dynamically
+        LinearLayout layout = new LinearLayout(this);
+
+        //Setup Layout Attributes
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        layout.setLayoutParams(params);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        String[] some_array = getResources().getStringArray(R.array.sport_alert_list);
+
+
+        //Create Spinner
+        Spinner spinner = new Spinner(this);
+        String[] string_list = new String[]{"Test 1", "Test 2", "Test 3"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_selectable_list_item, string_list);
+        spinner.setAdapter(adapter);
+        spinner.setGravity(Gravity.CENTER);
+
+        //Create button
+        Button button = new Button(this);
+        button.setText("My Button");
+        button.setWidth(100);
+        button.setHeight(50);
+
+        //Add Views to the layout
+
+        for(int i =0;i< some_array.length; i++) {
+            TextView textview =  new TextView(this);
+            //  textview.setText(some_array[i]);
+            textview.setText(Html.fromHtml("<ul><li> I am an Android developer</li><li>Another Item</li></ul>", null,null));
+            layout.addView(textview);
+
+        }
+
+        layout.addView(spinner);
+        layout.addView(button);
+
+        //Create AlertDialog Builder
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        //Give the Dialog a Title
+        builder.setTitle(getString(R.string.sport_alert_title));
+
+        //Set the Dynamically created layout as the Dialogs view
+        builder.setView(layout);
+
+        //Add Dialog button that will just close the Dialog
+        builder.setNeutralButton("Done", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        //Show the custom AlertDialog
+        AlertDialog alert = builder.create();
+        alert.show();
+
+        }
+
 
     @Override
     public void onBackPressed() {

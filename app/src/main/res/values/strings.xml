@@ -106,5 +106,12 @@
     <string name="cure_nothing">لاشيئ</string>
     <string name="time">الوقت</string>
     <string name="_00_00">00:00</string>
+    <string name="sport_alert_title" translatable="false">نصائح لمرضى السكري عند ممارسة التمارين الرياضية</string>
+    <string-array name="sport_alert_list">
+        <item>قم بفحص السكري قبل 30 دقيقة من ممارسة الرياضة</item>
+        <item>تجنب ممارسة الرياضة إذا كان مستوى السكر اقل من 100</item>
+        <item>تجنب ممارسة الرياضة إئا كان مستوى السكر اعلى من 300</item>
+        <item>توقف عن ممارسة الرياضة فورا عند ظهورعلامات مثل الدوار والتعرق أو الضعف</item>
+    </string-array>
     <string name="todo">TODO</string>
 </resources>

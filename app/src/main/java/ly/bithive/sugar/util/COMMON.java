@@ -14,6 +14,11 @@ public class COMMON {
     static public String NOTIFICATION_TONE_URI_KEY = "notificationtone";
     static public String FIRST_RUN_KEY = "firstrun";
 
+    static public String BMI_WEIGHT_KEY = "weight";
+    static public String BMI_HEIGHT_KEY = "height";
+    static public String BMI_READING_KEY = "reading";
+
+
     static public int DANGER_HIGH = 399;
     static public int DANGER_LOW = 51;
 
@@ -37,5 +42,7 @@ public class COMMON {
 
     static public int BS_LOW_1 = 71;
     static public int BS_LOW_2 = 69;
+    static public int AGE_ADULT = 19;
+    static public int AGE_OLD = 65;
 
 }
