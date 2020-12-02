@@ -18,25 +18,37 @@ import androidx.viewpager.widget.ViewPager;
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 
 import ly.bithive.sugar.R;
+import ly.bithive.sugar.SessionManager;
 
 public class WalkThroughActivity extends AppCompatActivity {
-
+    SessionManager session;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_walk_through);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        session = new SessionManager(getApplicationContext());
 
-        ViewPager walkThroughPager = findViewById(R.id.walkThroughPager);
-        DotsIndicator indicator = findViewById(R.id.indicator);
+        if (session.isLoggedIn()) {
+            // User is already logged in. Take him to main activity
+            Intent intent = new Intent(WalkThroughActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            ViewPager walkThroughPager = findViewById(R.id.walkThroughPager);
+            DotsIndicator indicator = findViewById(R.id.indicator);
+            WalkThroughAdapter viewPagerAdapter = new WalkThroughAdapter(getSupportFragmentManager());
+            walkThroughPager.setAdapter(viewPagerAdapter);
+            indicator.setViewPager(walkThroughPager);
+        }
+
+
+
         Button getStarted = findViewById(R.id.getStarted);
-        WalkThroughAdapter viewPagerAdapter = new WalkThroughAdapter(getSupportFragmentManager());
-        walkThroughPager.setAdapter(viewPagerAdapter);
-        indicator.setViewPager(walkThroughPager);
         getStarted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(WalkThroughActivity.this, InitUserInfoActivity.class));
+                startActivity(new Intent(WalkThroughActivity.this, StartActivity.class));
                 finish();
             }
         });

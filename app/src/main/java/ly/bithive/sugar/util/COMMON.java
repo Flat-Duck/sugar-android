@@ -1,7 +1,20 @@
 package ly.bithive.sugar.util;
 
+import android.icu.text.SimpleDateFormat;
+import android.icu.util.Calendar;
+
+import java.text.Format;
+
 public class COMMON {
+
+    static public String BASE_URL = "http://192.168.43.18/sugar/public/api/";
+    static public String LOGIN_URL = BASE_URL + "login";
+    static public String USER_URL = BASE_URL + "user";
+    static public String CHATS_URL = BASE_URL + "chats";
+
+
     static public String USERS_SHARED_PREF = "user_pref";
+
     static public int PRIVATE_MODE = 0;
     static public String WEIGHT_KEY = "weight";
     static public String WORK_TIME_KEY = "worktime";
@@ -18,6 +31,10 @@ public class COMMON {
     static public String BMI_HEIGHT_KEY = "height";
     static public String BMI_READING_KEY = "reading";
 
+    public static final String KEY_DATE = "date";
+    public static final String KEY_TIME = "time";
+    public static final String KEY_DURATION = "duration";
+    public static final String KEY_TYPE = "type";
 
     static public int DANGER_HIGH = 399;
     static public int DANGER_LOW = 51;
@@ -44,5 +61,15 @@ public class COMMON {
     static public int BS_LOW_2 = 69;
     static public int AGE_ADULT = 19;
     static public int AGE_OLD = 65;
+
+
+    public static String getCurrentDate(){
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        return df.format(c);
+    }
+    public static Double calculateIntake(int weight, int workTime) {
+        return ((weight * 100 / 3.0) + (workTime / 6 * 7));
+    }
 
 }

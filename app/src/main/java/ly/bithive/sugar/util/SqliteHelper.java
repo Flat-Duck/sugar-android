@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+
 import static ly.bithive.sugar.util.COMMON.BMI_HEIGHT_KEY;
 import static ly.bithive.sugar.util.COMMON.BMI_READING_KEY;
 import static ly.bithive.sugar.util.COMMON.BMI_WEIGHT_KEY;
@@ -19,10 +20,13 @@ public class SqliteHelper extends SQLiteOpenHelper {
     private static String DATABASE_NAME = "Sugar";
     private static final String TABLE_STATS = "stats";
     private static final String TABLE_MEASURE = "measure";
+    private static final String TABLE_SPORTS = "sport";
     private static final String TABLE_BMI = "bmi";
     private static final String KEY_ID = "id";
-    private static final String KEY_DATE = "date";
+    public static final String KEY_DATE = "date";
     private static final String KEY_TIME = "time";
+    private static final String KEY_DURATION = "duration";
+    private static final String KEY_TYPE = "type";
     private static final String KEY_INTOOK = "intook";
     private static final String KEY_TOTAL_INTAKE = "totalintake";
     private static final String KEY_MG = "morning_glycemia";
@@ -44,11 +48,6 @@ public class SqliteHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-//    private String CREATE_MEASURE_TABLE = ("CREATE TABLE " + TABLE_MEASURE + "("
-//            + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_DATE + " TEXT UNIQUE,"
-//            + KEY_MG + " TEXT," + KEY_NG + " TEXT," + KEY_EG + " TEXT," + KEY_SG + " TEXT,"
-//            + KEY_MI + " TEXT," + KEY_NI + " TEXT," + KEY_EI + " TEXT," + KEY_SI + " TEXT)");
-
     private String CREATE_MEASURE_TABLE = ("CREATE TABLE " + TABLE_MEASURE + "("
             + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_DATE + " TEXT,"+ KEY_TIME + " TEXT,"
             + KEY_PERIOD + " TEXT," + KEY_CURE + " TEXT," + KEY_GLYCEMIA + " TEXT," + KEY_INSULIN + " TEXT)");
@@ -64,11 +63,20 @@ public class SqliteHelper extends SQLiteOpenHelper {
             + BMI_HEIGHT_KEY + " INT,"
             + KEY_DATE + " TEXT" + ")");
 
+    private String CREATE_SPORTS_TABLE = ("CREATE TABLE " + TABLE_SPORTS + "("
+            + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + KEY_DURATION + " INT ,"
+            + KEY_TYPE + " TEXT,"
+            + KEY_TIME + " TEXT ,"
+            + KEY_DATE + " TEXT" + ")");
+
+
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(CREATE_STATS_TABLE);
         sqLiteDatabase.execSQL(CREATE_MEASURE_TABLE);
         sqLiteDatabase.execSQL(CREATE_BMI_TABLE);
+        sqLiteDatabase.execSQL(CREATE_SPORTS_TABLE);
     }
 
     @Override
@@ -76,6 +84,7 @@ public class SqliteHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_STATS);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_MEASURE);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_BMI);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_SPORTS);
         onCreate(sqLiteDatabase);
     }
 
@@ -88,6 +97,20 @@ public class SqliteHelper extends SQLiteOpenHelper {
             values.put(KEY_DATE, date);
             SQLiteDatabase db = this.getWritableDatabase();
             long response = db.insert(TABLE_STATS, null, values);
+            db.close();
+            return response;
+        }
+        return -1;
+    }
+    public long addSport(String date,String time,String type, int duration) {
+        if (checkExistance(date) == 0) {
+            ContentValues values = new ContentValues();
+            values.put(KEY_DURATION, duration);
+            values.put(KEY_TYPE, type);
+            values.put(KEY_TIME, time);
+            values.put(KEY_DATE, date);
+            SQLiteDatabase db = this.getWritableDatabase();
+            long response = db.insert(TABLE_SPORTS, null, values);
             db.close();
             return response;
         }
@@ -147,6 +170,11 @@ public class SqliteHelper extends SQLiteOpenHelper {
         return count;
 
     }
+    public Cursor getAllSports() {
+        String selectQuery = "SELECT * FROM " + TABLE_SPORTS;
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery(selectQuery, null);
+    }
 
     public Cursor getAllBMI() {
         String selectQuery = "SELECT * FROM " + TABLE_BMI;
@@ -160,7 +188,7 @@ public class SqliteHelper extends SQLiteOpenHelper {
         return db.rawQuery(selectQuery, null);
     }
 
-    int updateTotalIntake(String date, int totalintake) {
+    public int updateTotalIntake(String date, int totalintake) {
         int intook = getIntook(date);
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();

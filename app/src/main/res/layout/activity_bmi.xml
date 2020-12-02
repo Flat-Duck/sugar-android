@@ -17,7 +17,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Weight in kg"
+            android:hint="@string/weight_in_kg"
             android:inputType="number|numberDecimal" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -32,7 +32,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Height in cm"
+            android:hint="@string/height_in_cm"
             android:inputType="number|numberDecimal" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -44,7 +44,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="19dp"
         android:onClick="calculateClickHandler"
-        android:text="Calculate BMI"
+        android:text="@string/calculate_bmi"
         android:textSize="20sp" />
 
     <TextView
@@ -52,7 +52,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Result"
+        android:text="@string/result"
         android:textColor="#000000"
         android:textSize="20sp" />
 
@@ -61,7 +61,6 @@
         android:layout_gravity="center_horizontal|center_vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/calcBMI"
         android:layout_marginTop="44dp" />
 
 

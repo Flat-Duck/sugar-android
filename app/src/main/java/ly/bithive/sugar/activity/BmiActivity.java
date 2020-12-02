@@ -102,7 +102,7 @@ setUpGauge();
             String bmiInterpretation = interpretBMI(newBMI);
             resultLabel.setTextColor(color);
             // now set the value in the results text
-            resultLabel.setText("BMI Score = " + newBMI + "\n" + bmiInterpretation);
+            resultLabel.setText(getString(R.string.bmi_score) + newBMI + "\n" + bmiInterpretation);
 
             halfGauge.setValue(newBMI);
         }

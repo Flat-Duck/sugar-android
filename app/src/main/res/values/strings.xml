@@ -106,7 +106,7 @@
     <string name="cure_nothing">لاشيئ</string>
     <string name="time">الوقت</string>
     <string name="_00_00">00:00</string>
-    <string name="sport_alert_title" translatable="false">نصائح لمرضى السكري عند ممارسة التمارين الرياضية</string>
+    <string name="sport_alert_title">نصائح لمرضى السكري عند ممارسة التمارين الرياضية</string>
     <string-array name="sport_alert_list">
         <item>قم بفحص السكري قبل 30 دقيقة من ممارسة الرياضة</item>
         <item>تجنب ممارسة الرياضة إذا كان مستوى السكر اقل من 100</item>
@@ -114,4 +114,30 @@
         <item>توقف عن ممارسة الرياضة فورا عند ظهورعلامات مثل الدوار والتعرق أو الضعف</item>
     </string-array>
     <string name="todo">TODO</string>
+    <string name="welcome">مرحبا</string>
+    <string name="sign_in">دخول</string>
+    <string name="exit">خروج</string>
+    <string name="you_should_have_an_account">يجب على الدكتور انشاء حساب خاص بك</string>
+    <string name="sign_in_title">تسجيل الدخول</string>
+    <string name="please_use_phone">الرجاء ادخال رقم الهاتف للدخول</string>
+    <string name="ok">حسناً</string>
+    <string name="cancel">إلغاء</string>
+    <string name="please_enter_credentials">الرجاء ادخال بيانات صحيحة</string>
+    <string name="logging_in">جاري تسجيل الدخول</string>
+    <string name="phone">رقم الهاتف</string>
+    <string name="password">كلمة المرور</string>
+    <string name="weight_in_kg">الوزن بالكيلوجرام</string>
+    <string name="height_in_cm">"الطول بالمتر "</string>
+    <string name="calculate_bmi">حساب مؤشر الكتلة</string>
+    <string name="result">النتيجة</string>
+    <string name="bmi_score">النتيجة = </string>
+    <string name="general_advices">نصائح عامة لمرضى السكري</string>
+    <string name="please_enter_message">الرجاء إدخال رسالة</string>
+    <string name="send">إرسال</string>
+    <string name="please">الرجاء</string>
+    <string name="in"> في </string>
+    <string name="at"> عندالساعة </string>
+    <string name="u_done"> لقد قمت ب </string>
+    <string name="exrsice_for"> كنشاط رياضي لمدة </string>
+    <string name="minutes"> دقيقة </string>
 </resources>

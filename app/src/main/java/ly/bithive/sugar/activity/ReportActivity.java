@@ -35,18 +35,30 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import ly.bithive.sugar.R;
 import ly.bithive.sugar.ReportItem;
 import ly.bithive.sugar.ReportListAdapter;
+import ly.bithive.sugar.SportReportAdapter;
+import ly.bithive.sugar.SportReportItem;
+import ly.bithive.sugar.util.COMMON;
+import ly.bithive.sugar.util.SqliteHelper;
+
+
+import static ly.bithive.sugar.util.COMMON.KEY_TIME;
+import static ly.bithive.sugar.util.COMMON.KEY_TYPE;
+import static ly.bithive.sugar.util.COMMON.KEY_DURATION;
+import static ly.bithive.sugar.util.COMMON.WAKEUP_TIME;
+import static ly.bithive.sugar.util.SqliteHelper.KEY_DATE;
 
 public class ReportActivity extends AppCompatActivity {
 
    // private static final String TAG = ReportActivity.class.getSimpleName();
     Context context;
   //  PieChart pieChart;
-
+SqliteHelper sqliteHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report);
         context = this;
+        sqliteHelper = new SqliteHelper(context);
         ViewPager reportPager = findViewById(R.id.reportPager);
         DotsIndicator indicator = findViewById(R.id.indicator);
         ReportFragAdapter viewPagerAdapter = new ReportFragAdapter(getSupportFragmentManager());
@@ -75,7 +87,7 @@ public class ReportActivity extends AppCompatActivity {
                 case 1:
                     return new PieChartReport();
                 case 2:
-                    return new LineChartReport();
+                    return new LineChartReport(context);
                 case 0:
                 default:
                     return new TextReport(context);
@@ -262,9 +274,57 @@ public class ReportActivity extends AppCompatActivity {
     }
 
     public static class LineChartReport extends Fragment {
+        RecyclerView recyclerView;
+        SportReportAdapter mAdapter;
+        Context mContext;
+        List<SportReportItem> reportItems;
+
+        LineChartReport(Context context) {
+            this.mContext = context;
+        }
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            return inflater.inflate(R.layout.walk_through_three, container, false);
+            View view = inflater.inflate(R.layout.fragment_sport_report, container, false);
+
+             reportItems = new ArrayList<>();
+            recyclerView = view.findViewById(R.id.rvSportReport);
+            mAdapter = new SportReportAdapter(mContext,reportItems);
+            recyclerView.setHasFixedSize(true);
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mContext);
+            recyclerView.setLayoutManager(mLayoutManager);
+            recyclerView.setAdapter(mAdapter);
+            PrepareSportReportData();
+
+
+            return view;
+        }
+
+        private void PrepareSportReportData() {
+            SqliteHelper  sqliteHelper = new SqliteHelper(getActivity().getApplicationContext());
+            String type,date,time;
+            int duration;
+           // Cursor cursor = ;
+           // for (cursor.)
+                try (Cursor cursor = sqliteHelper.getAllSports()) {
+                while (cursor.moveToNext()) {
+                    if (cursor != null) {
+                        int dateIndex = cursor.getColumnIndexOrThrow(KEY_DATE);
+                        int typeIndex = cursor.getColumnIndexOrThrow(KEY_TYPE);
+                        int durationIndex = cursor.getColumnIndexOrThrow(KEY_DURATION);
+                        int timeIndex = cursor.getColumnIndexOrThrow(KEY_TIME);
+                        date = cursor.getString(dateIndex);
+                        type = cursor.getString(typeIndex);
+                        duration = cursor.getInt(durationIndex);
+                        time = cursor.getString(timeIndex);
+                        SportReportItem sportReportItem = new SportReportItem(date,String.valueOf(duration),time,type);
+                        reportItems.add(sportReportItem);
+                    }
+                }
+
+                   // Cursor mCursor = db.rawQuery(selectQuery, whereArgs);
+
+            }
+
         }
     }
 

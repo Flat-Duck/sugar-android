@@ -4,32 +4,30 @@
     <string name="measure_time">فترة القياس</string>
     <string name="timer_icon">TODO</string>
 
-    <string name="app_name">SugarApp</string>
-    <string name="pref_notification_message_value">Hey… Lets drink some water…</string>
-    <string name="add_info_text">Please provide some information to customize the experience for you…!!</string>
-    <string name="str_continue">Continue</string>
-    <string name="enter_your_name_hint">Enter your name</string>
-    <string name="age_hint">Enter your age</string>
-    <string name="weight_hint">Enter your weight in Kg</string>
-    <string name="custom_intake_hint">Enter your custom intake target in ml</string>
-    <string name="workout_hint">Your daily work out time in min/day</string>
-    <string name="wakeup_hint">Your wake up time</string>
-    <string name="sleeping_hint">Your Sleep time</string>
-    <string name="tagline_text">Lets keep you hydrated…</string>
-    <string name="get_started">Get Started</string>
-    <string name="edit_info_text">Edit Your Info</string>
-    <string name="update">Update</string>
-    <string name="notif_setting_header">Notification Settings</string>
-    <string name="notif_messsage_hint">Notification Message</string>
-    <string name="notif_tone_hint">Notification Tone</string>
-    <string name="notif_freq_hint">Notification Frequency</string>
-    <string name="walkthrough_text_one">Water is 60 percent of your body weight. Your body depends on water to
-        survive.
+    <string name="app_name">تطبيق مرضى السكري</string>
+    <string name="pref_notification_message_value">اهلا لنشرب بعضا من الماء</string>
+    <string name="add_info_text">الرجاء ادخال بعض المعلومات عنك</string>
+    <string name="str_continue">اكمال</string>
+    <string name="enter_your_name_hint">أدخل اسمك</string>
+    <string name="age_hint">ادخل عمرك</string>
+    <string name="weight_hint">ادخل وزنك بالكيلوجرام</string>
+    <string name="custom_intake_hint">ادخل مقدار الشرب</string>
+    <string name="workout_hint">مدة النشاط في اليوم بالدقيقة</string>
+    <string name="wakeup_hint">وقت الاستيقاظ</string>
+    <string name="sleeping_hint">وفت النوم</string>
+    <string name="tagline_text">لنبقيك بعيدا عن الجفاف</string>
+    <string name="get_started">إبدا</string>
+    <string name="edit_info_text">عدل معلوماتك</string>
+    <string name="update">تعديل</string>
+    <string name="notif_setting_header">تعديل التنبيهات</string>
+    <string name="notif_messsage_hint">رسالة التنبيهات</string>
+    <string name="notif_tone_hint">نغمة الرنين</string>
+    <string name="notif_freq_hint">تكرار التنبه</string>
+    <string name="walkthrough_text_one">الماء يساوي 60 في المائة من جسم الانسان لدا هوا مهم جدا
     </string>
-    <string name="walkthough_text_two">Lack of water can lead to dehydration. Even mild dehydration can drain you and
-        make you tired.
+    <string name="walkthough_text_two">التقليل من شرب الماء يسبب مشاكل للكلى
     </string>
-    <string name="walkthrough_text_three">Every cell, tissue and organ in your body needs water to work properly.
+    <string name="walkthrough_text_three">كل خلايا الجسم متكونة من الماء
     </string>
     <string name="add">أضافة</string>
     <string name="mesure_timer">وقت القياس</string>
@@ -100,7 +98,7 @@
     <string name="advice_msg">اشرب عصيرا او تناول لوح شكلاطة حتى الحصول علي الرعاية الصحية </string>
     <string name="normal_label">طبيعي </string>
     <string name="normal_msg">مستوى السكر لديك في حالة طبيعية  استعمل النصائح .والعلاج لاجل ان تستمر على ذلك</string>
-
+    <string name="sport_alert_title">نصائح لمرضى السكري عند ممارسة التمارين الرياضية</string>
     <string name="before_eat">قبل الاكل</string>
     <string name="after_eat">بعد الاكل</string>
 
@@ -115,4 +113,30 @@
     <string name="time">الوقت</string>
     <string name="_00_00">00:00</string>
     <string name="todo">TODO</string>
+    <string name="welcome">مرحبا</string>
+    <string name="sign_in">دخول</string>
+    <string name="exit">خروج</string>
+    <string name="you_should_have_an_account">يجب على الدكتور انشاء حساب خاص بك</string>
+    <string name="sign_in_title">تسجيل الدخول</string>
+    <string name="please_use_phone">الرجاء ادخال رقم الهاتف للدخول</string>
+    <string name="ok">حسناً</string>
+    <string name="cancel">إلغاء</string>
+    <string name="please_enter_credentials">الرجاء ادخال بيانات صحيحة</string>
+    <string name="logging_in">جاري تسجيل الدخول</string>
+    <string name="phone">رقم الهاتف</string>
+    <string name="password">كلمة المرور</string>
+    <string name="weight_in_kg">الوزن بالكيلوجرام</string>
+    <string name="height_in_cm">"الطول بالمتر "</string>
+    <string name="calculate_bmi">حساب مؤشر الكتلة</string>
+    <string name="result">النتيجة</string>
+    <string name="bmi_score">النتيجة = </string>
+    <string name="general_advices">نصائح عامة لمرضى السكري</string>
+    <string name="please_enter_message">الرجاء إدخال رسالة</string>
+    <string name="send">إرسال</string>
+    <string name="please">الرجاء</string>
+    <string name="in"> في </string>
+    <string name="at"> عندالساعة </string>
+    <string name="u_done"> لقد قمت ب </string>
+    <string name="exrsice_for"> كنشاط رياضي لمدة </string>
+    <string name="minutes"> دقيقة </string>
 </resources>

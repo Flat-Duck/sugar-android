@@ -15,7 +15,9 @@ import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.content.Context;
 import android.content.Intent;
@@ -32,6 +34,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import ly.bithive.sugar.util.SetupActions;
@@ -44,8 +47,6 @@ import ly.bithive.sugar.R;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     Spinner measureSpinnerTime, measureSpinnerCure;
     TextInputEditText txtTime;
-//    TextView tvSelectedItem;
-  //  ImageButton setTimeBtn;
 private long wakeupTime;
     Button addBtn;
     private int mHour, mMinute;
@@ -59,6 +60,7 @@ private long wakeupTime;
     private SharedPreferences sharedPref;
     private boolean doubleBackToExitPressedOnce = false;
     private Helper helper;
+    ImageView btnUser;
 
     public void showBottomSheetDialog() {
         View view = getLayoutInflater().inflate(R.layout.bottom_sheet_shot_fragment, null);
@@ -68,7 +70,6 @@ private long wakeupTime;
         measureSpinnerCure = view.findViewById(R.id.spCure);
         etGlycemia = view.findViewById(R.id.etGlycemia);
         addBtn = view.findViewById(R.id.btnAdd);
-
         btnWakeUpTime = view.findViewById(R.id.btnWakeUpTime);
         btnWakeUpTime.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -116,7 +117,7 @@ private long wakeupTime;
                     exit = true;
                 }
                 if (!exit) {
-                    if (measureSpinnerTime.getSelectedItem() == getResources().getString(R.string.before_eat)) {
+                    if (measureSpinnerTime.getSelectedItem() == getResources().getString(R.string.after_eat)) {
 
                         if (glycemia < COMMON.BE_LOW_2) {
                             showAlertMsg(R.string.l2_label, R.string.l2_msg, "yellow");
@@ -131,7 +132,7 @@ private long wakeupTime;
                         } else {
                             showAlertMsg(R.string.normal_label, R.string.normal_msg, "green");
                         }
-                    } else if (measureSpinnerTime.getSelectedItem() == getResources().getString(R.string.after_eat)) {
+                    } else if (measureSpinnerTime.getSelectedItem() == getResources().getString(R.string.before_eat)) {
                         if (glycemia < COMMON.AE_LOW_2) {
                             showAlertMsg(R.string.l2_label, R.string.l2_msg, "yellow");
                         } else if (glycemia < COMMON.AE_LOW_1) {
@@ -206,6 +207,13 @@ private long wakeupTime;
         setContentView(R.layout.activity_main);
         setupActions = new SetupActions(this);
         sqliteHelper = new SqliteHelper(this);
+        btnUser = findViewById(R.id.btnProfile);
+        btnUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this,ProfileActivity.class));
+            }
+        });
         helper = new Helper();
         context = this;
      //   Button test_button = (Button) findViewById(R.id.button_test);
@@ -245,6 +253,10 @@ private long wakeupTime;
         cvSport.setOnClickListener(this);
         CardView cvFood = findViewById(R.id.cvFood);
         cvFood.setOnClickListener(this);
+        CardView cvMessaging = findViewById(R.id.CVMessaging);
+        cvMessaging.setOnClickListener(this);
+        CardView cvAdvice = findViewById(R.id.cvAdvice);
+        cvAdvice.setOnClickListener(this);
     }
 
     @Override
@@ -267,6 +279,12 @@ private long wakeupTime;
                 break;
             case R.id.cvWeight:
                 showWeightActivity();
+                break;
+            case R.id.CVMessaging:
+                showMessageActivity();
+                break;
+            case R.id.cvAdvice:
+                showAdviceActivity();
                 break;
         }
     }
@@ -291,6 +309,59 @@ private long wakeupTime;
        // startActivity(new Intent(MainActivity.this, StatsActivity.class));
         showSportsAlert();
     }
+    private void showMessageActivity() {
+        startActivity(new Intent(MainActivity.this, MessagingActivity.class));
+    }
+
+    private void showAdviceActivity() {
+        showAdviceAlert();
+    }
+
+    private void showAdviceAlert() {
+        //Create LinearLayout Dynamically
+        LinearLayout layout = new LinearLayout(this);
+        ScrollView scrollView = new ScrollView(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        //Setup Layout Attributes
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        layout.setLayoutParams(params);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        //Add Views to the layout
+        String[] advices = { "لاهتمام بنظافة القدمين يوميًا وخصوصًا بين الأصابع لمنع الجراثيم والبكتيريا التى تؤدى إلى بتر القدمين، مع عدم المشى حافيا",
+                "الحد من تناول الأطعمة الدسمة التى تحتوى على نسبة دهون عالية منعا للإصابة بالسمنة.",
+                "الابتعاد عن الحلويات واستبدالها بالعصائر الطبيعية.",
+                "الإكثار فى تناول الخضراوات والفواكه، حيث إنها تساعد على تعزيز صحة الجسم وحمايته من الأمراض.",
+                "مراقبة مستوى السكر كل يوم مع اتباع نظام غذائى صحى. ",
+                "يجب أن يهتم مريض السكر بوجبة الإفطار، لتجنب الإصابة بغيبوبة السكر ومضاعفاتها. ",
+                "تحديد مواعيد ثابتة للطعام على أن تكون خمس وجبات  على مدار اليوم بكميات قليلة ، وغنيه بالعناصر الغذائية المختلفة.",
+                 "ممارسة النشاط البدنى والرياضة سواء من خلال المشى والحركة والسباحة  أو التمارين الرياضية فى الجيم.",
+                 "الابتعاد عن التدخين، حيث أنه يؤثر على صحة القلب والأوعية الدموية.",
+                 "تجنب المشروبات الغازية والكحولية نظرا لاحتوائها على نسبة عالية من السكريات والمواد الملونة  التى تضر الصحة.",
+                 "الإكثار فى شرب المياه على إلا تقل عن 2 لتر مياه فى اليوم لتحسين وظائف الجسم.",
+                 "النوم عدد ساعات كافيه لتجنب الأرق والتوتر.",
+                 "الابتعاد عن الضغوط النفسية التى تؤثر على الصحة وتحديد يوم فى الأسبوع للتنزه أو زيارة الأقارب والأصدقاء.",
+                 "الاهتمام بصحة الاسنان واللثة للكشف على أى مشاكل أخرى.",
+                 "زيارة طبيب العيون باستمرار لتجنب الاصابة باى مضاعفات للعين نتيجة مرض السكر.",
+                 "يجب توفير جهاز قياس السكر فى الأماكن التى يتواجد فيها المريض سواء المنزل أو العمل."};
+        for(int i =0;i< advices.length; i++) {
+            TextView textview =  new TextView(this);
+            String advice = String.valueOf(Html.fromHtml("<li>"+advices[i]+"</li>",1));
+            textview.setText(advice);
+            layout.addView(textview);
+        }
+        scrollView.addView(layout);
+        //Create AlertDialog Builder
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        //Give the Dialog a Title
+        builder.setTitle(R.string.general_advices);
+        //Set the Dynamically created layout as the Dialogs view
+        builder.setView(scrollView);
+        //Add Dialog button that will just close the Dialog
+        builder.setNeutralButton(R.string.ok, null);
+        //Show the custom AlertDialog
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
 
     private void showSportsAlert() {
 
@@ -301,34 +372,15 @@ private long wakeupTime;
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         layout.setLayoutParams(params);
         layout.setOrientation(LinearLayout.VERTICAL);
-        String[] some_array = getResources().getStringArray(R.array.sport_alert_list);
+        String[] sportAdvices = getResources().getStringArray(R.array.sport_alert_list);
 
 
-        //Create Spinner
-        Spinner spinner = new Spinner(this);
-        String[] string_list = new String[]{"Test 1", "Test 2", "Test 3"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_selectable_list_item, string_list);
-        spinner.setAdapter(adapter);
-        spinner.setGravity(Gravity.CENTER);
-
-        //Create button
-        Button button = new Button(this);
-        button.setText("My Button");
-        button.setWidth(100);
-        button.setHeight(50);
-
-        //Add Views to the layout
-
-        for(int i =0;i< some_array.length; i++) {
+        for(int i =0;i< sportAdvices.length; i++) {
             TextView textview =  new TextView(this);
-            //  textview.setText(some_array[i]);
-            textview.setText(Html.fromHtml("<ul><li> I am an Android developer</li><li>Another Item</li></ul>", null,null));
+            String advice = String.valueOf(Html.fromHtml("<li>"+sportAdvices[i]+"</li>",1));
+            textview.setText(advice);
             layout.addView(textview);
-
         }
-
-        layout.addView(spinner);
-        layout.addView(button);
 
         //Create AlertDialog Builder
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -340,10 +392,10 @@ private long wakeupTime;
         builder.setView(layout);
 
         //Add Dialog button that will just close the Dialog
-        builder.setNeutralButton("Done", new DialogInterface.OnClickListener() {
+        builder.setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
+                startActivity(new Intent(MainActivity.this, SportActivity.class));
             }
         });
 

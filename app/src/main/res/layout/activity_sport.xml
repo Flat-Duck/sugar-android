@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/ic_app_bg"
     tools:context=".activity.SportActivity">
     
     <io.feeeei.circleseekbar.CircleSeekBar
@@ -65,6 +66,79 @@
         app:layout_constraintTop_toBottomOf="@+id/textView18"
         app:layout_constraintVertical_bias="0.079" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:background="@color/colorPrimary"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner"
+        app:layout_constraintVertical_bias="0.079"
+        >
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp" >
+
+
+        <ImageButton
+            android:id="@+id/sportDateBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/dividerColor"
+            app:srcCompat="@drawable/ic_30_minutes"
+            android:contentDescription="@string/todo" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/sportDate"
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+            android:theme="@style/TextInputLayoutAppearance">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:focusable="false"
+                android:hint="@string/time"
+                android:text="@string/_00_00"
+                android:inputType="numberSigned" />
+        </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp" >
+            <ImageButton
+                android:id="@+id/sportTimeBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@color/dividerColor"
+                app:srcCompat="@drawable/ic_30_minutes"
+                android:contentDescription="@string/todo" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/sportTime"
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content"
+                android:theme="@style/TextInputLayoutAppearance">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:focusable="false"
+                    android:hint="@string/time"
+                    android:text="@string/_00_00"
+                    android:inputType="numberSigned" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+    </LinearLayout>
     <TextView
         android:id="@+id/textView18"
         android:layout_width="wrap_content"
@@ -76,5 +150,15 @@
         app:layout_constraintEnd_toEndOf="@+id/seekBar"
         app:layout_constraintStart_toStartOf="@+id/seekBar"
         app:layout_constraintTop_toBottomOf="@+id/seekBar" />
+
+    <Button
+        android:id="@+id/sportSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
