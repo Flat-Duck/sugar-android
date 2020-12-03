@@ -38,9 +38,9 @@ public class SqliteHelper extends SQLiteOpenHelper {
     private static final String KEY_EI = "evening_insulin";
     private static final String KEY_SI = "sleep_insulin";
 
-    private static final String KEY_PERIOD = "period";
+    public static final String KEY_PERIOD = "period";
     private static final String KEY_CURE = "cure";
-    private static final String KEY_GLYCEMIA = "glycemia";
+    public static final String KEY_GLYCEMIA = "glycemia";
     private static final String KEY_INSULIN = "insulin";
 
 
@@ -175,6 +175,11 @@ public class SqliteHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery(selectQuery, null);
     }
+    public Cursor getAllAnalysis() {
+        String selectQuery = "SELECT * FROM " + TABLE_MEASURE;
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery(selectQuery, null);
+    }
 
     public Cursor getAllBMI() {
         String selectQuery = "SELECT * FROM " + TABLE_BMI;
@@ -206,7 +211,7 @@ public class SqliteHelper extends SQLiteOpenHelper {
 
 
     public long insertShot(String date,String time, String glycemia, String period, String cure) {
-        debugInsert(time);
+       // debugInsert(time);
         ContentValues values = new ContentValues();
         values.put(KEY_DATE, date);
         values.put(KEY_TIME, time);

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -14,6 +15,7 @@ import android.text.Html;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,12 +29,15 @@ import android.os.Handler;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -46,7 +51,7 @@ import ly.bithive.sugar.R;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     Spinner measureSpinnerTime, measureSpinnerCure;
-    TextInputEditText txtTime;
+   // TextInputEditText txtTime;
 private long wakeupTime;
     Button addBtn;
     private int mHour, mMinute;
@@ -54,23 +59,52 @@ private long wakeupTime;
     private Context context;
     SetupActions setupActions;
     SqliteHelper sqliteHelper;
-    ImageButton btnWakeUpTime,btnSleepTime;
-    TextInputLayout etWakeUpTime;
+    ImageButton btnWakeUpTime,btnShotDate;
+    private int year, month, day,sPeriod;
+    TextInputLayout etWakeUpTime,textDate;
     private int totalIntake = 0;
     private SharedPreferences sharedPref;
     private boolean doubleBackToExitPressedOnce = false;
     private Helper helper;
     ImageView btnUser;
+    String sDate;
 
     public void showBottomSheetDialog() {
         View view = getLayoutInflater().inflate(R.layout.bottom_sheet_shot_fragment, null);
         final BottomSheetDialog dialog = new BottomSheetDialog(this);
         etWakeUpTime = view.findViewById(R.id.etWakeUpTime);
+        textDate = view.findViewById(R.id.shotDate);
         measureSpinnerTime = view.findViewById(R.id.spPeriod);
         measureSpinnerCure = view.findViewById(R.id.spCure);
         etGlycemia = view.findViewById(R.id.etGlycemia);
         addBtn = view.findViewById(R.id.btnAdd);
         btnWakeUpTime = view.findViewById(R.id.btnWakeUpTime);
+        btnShotDate = view.findViewById(R.id.shotDateBtn);
+        btnShotDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar calendar = Calendar.getInstance();
+                day = calendar.get(android.icu.util.Calendar.DAY_OF_MONTH);
+                month = calendar.get(android.icu.util.Calendar.MONTH);
+                year = calendar.get(android.icu.util.Calendar.YEAR);
+
+                DatePickerDialog mTimePicker = new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int thisYear, int thisMonth, int dayOfMonth) {
+                        Calendar time = Calendar.getInstance();
+                        time.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                        time.set(Calendar.MONTH, thisMonth);
+                        time.set(Calendar.YEAR, thisYear);
+                        sDate = String.format("%02d-%02d-%02d", thisYear, thisMonth, dayOfMonth);
+                        textDate.getEditText().setText(sDate);
+                      //  Toast.makeText(getApplicationContext(), sTime, Toast.LENGTH_LONG).show();
+
+                    }
+                }, year, month, day);
+                mTimePicker.setTitle("Select Sleeping Time");
+                mTimePicker.show();
+            }
+        });
         btnWakeUpTime.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
@@ -100,8 +134,14 @@ private long wakeupTime;
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), textDate.getEditText().getText().toString(), Toast.LENGTH_LONG).show();
+                if(etGlycemia.getEditText().getText().toString().equals("")) {
+                    Toast.makeText(getApplicationContext(), "املء الفراغات", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 int glycemia = Integer.parseInt(etGlycemia.getEditText().getText().toString());
-                sqliteHelper.insertShot(Helper.getCurrentDate(), Helper.getCurrentTime(),
+
+                sqliteHelper.insertShot(textDate.getEditText().getText().toString(),etWakeUpTime.getEditText().getText().toString(),
                         etGlycemia.getEditText().getText().toString(),
                        // etInsulin.getEditText().getText().toString(),
                         measureSpinnerTime.getSelectedItem().toString(),
@@ -197,9 +237,9 @@ private long wakeupTime;
 
     }
 
-    private void setTime(int hourOfDay, int minute) {
-        txtTime.setText(hourOfDay + getString(R.string.coma) + minute);
-    }
+//    private void setTime(int hourOfDay, int minute) {
+//        txtTime.setText(hourOfDay + getString(R.string.coma) + minute);
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,16 +1,20 @@
 package ly.bithive.sugar.util;
 
+import android.annotation.SuppressLint;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
 
 import java.text.Format;
+import java.text.ParseException;
+import java.util.Date;
 
 public class COMMON {
 
-    static public String BASE_URL = "http://192.168.43.18/sugar/public/api/";
+    static public String BASE_URL = "http://192.168.10.134/sugar/public/api/";
     static public String LOGIN_URL = BASE_URL + "login";
     static public String USER_URL = BASE_URL + "user";
     static public String CHATS_URL = BASE_URL + "chats";
+    static public String SYNC_URL = BASE_URL + "analysis";
 
 
     static public String USERS_SHARED_PREF = "user_pref";
@@ -63,13 +67,27 @@ public class COMMON {
     static public int AGE_OLD = 65;
 
 
-    public static String getCurrentDate(){
+    public static String getCurrentDate() {
         Calendar c = Calendar.getInstance();
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
         return df.format(c);
     }
+
     public static Double calculateIntake(int weight, int workTime) {
         return ((weight * 100 / 3.0) + (workTime / 6 * 7));
     }
 
+    public static String convertDate(String inputD) {
+        String outPutD = "2001-01-21";
+        @SuppressLint("SimpleDateFormat")
+        java.text.SimpleDateFormat input = new java.text.SimpleDateFormat("dd-mm-yyyy");
+        java.text.SimpleDateFormat output = new java.text.SimpleDateFormat("yyyy-mm-dd");
+        try {
+            Date oneWayTripDate = input.parse(inputD);                 // parse input
+            outPutD = output.format(oneWayTripDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return outPutD;
+    }
 }

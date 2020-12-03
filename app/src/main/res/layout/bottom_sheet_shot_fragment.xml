@@ -110,6 +110,37 @@
                         android:inputType="numberSigned" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:background="@color/colorPrimary"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/shotDateBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@color/dividerColor"
+                    app:srcCompat="@drawable/ic_30_minutes"
+                    android:contentDescription="@string/todo" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/shotDate"
+                    android:layout_width="match_parent"
+
+                    android:layout_height="wrap_content"
+                    android:theme="@style/TextInputLayoutAppearance">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:focusable="false"
+                        android:hint="@string/time"
+                        android:text="@string/_00_00"
+                        android:inputType="numberSigned" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
 
         </LinearLayout>
 
