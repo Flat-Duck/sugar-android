@@ -15,6 +15,7 @@ public class COMMON {
     static public String USER_URL = BASE_URL + "user";
     static public String CHATS_URL = BASE_URL + "chats";
     static public String SYNC_URL = BASE_URL + "analysis";
+    static public String UPDATE_URL = BASE_URL + "user";
 
 
     static public String USERS_SHARED_PREF = "user_pref";

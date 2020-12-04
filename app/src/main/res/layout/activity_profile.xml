@@ -10,23 +10,27 @@
     android:orientation="vertical"
     >
     <RelativeLayout
+        android:id="@+id/rLayout"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:background="@color/colorSecondaryDark"
         android:padding="20dp">
+
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/profile_image"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
             android:src="@drawable/ic_user" />
         <TextView
             android:id="@+id/fullname_field"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/profile_image"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/profile_image"
 
             android:includeFontPadding="false"
             android:text="Taimoor Sikander"
@@ -40,14 +44,15 @@
             android:layout_alignTop="@+id/fullname_field"
             android:layout_marginStart="10dp"
             android:src="@drawable/ic_settings"
-            android:layout_toEndOf="@+id/fullname_field" />
+            android:layout_alignParentEnd="true"
+             />
         <TextView
             android:id="@+id/username_field"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/fullname_field"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/profile_image"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/profile_image"
             android:includeFontPadding="false"
             android:text="taimoor_sikander"
             android:textSize="14sp" />
@@ -109,103 +114,109 @@
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
         >
+<!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            android:hint="الاسم"-->
+<!--            android:id="@+id/full_name_profile1"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_width="match_parent">-->
+<!--            <com.google.android.material.textfield.TextInputEditText-->
+<!--                android:drawableStart="@drawable/ic_45_minutes"-->
+<!--                android:drawablePadding="10dp"-->
+<!--                android:maxLines="1"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:enabled="false"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_width="match_parent" />-->
+<!--    </com.google.android.material.textfield.TextInputLayout>-->
         <com.google.android.material.textfield.TextInputLayout
-            android:hint="Full Name"
-            android:id="@+id/full_name_profile1"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:drawableLeft="@drawable/ic_45_minutes"
-                android:drawablePadding="10dp"
-
-                android:maxLines="1"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent" />
-    </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
-            android:hint="Full Name"
+            android:hint="تاريخ الميلاد"
             android:id="@+id/full_name_profile2"
             android:layout_height="wrap_content"
             android:layout_width="match_parent">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:drawableLeft="@drawable/ic_45_minutes"
+                android:drawableStart="@drawable/ic_45_minutes"
                 android:drawablePadding="10dp"
-
+                android:textColor="@color/black"
+                android:enabled="false"
                 android:maxLines="1"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent" />
     </com.google.android.material.textfield.TextInputLayout>
+<!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            android:hint="نوع السكري"-->
+<!--            android:id="@+id/full_name_profile3"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_width="match_parent">-->
+
+<!--            <com.google.android.material.textfield.TextInputEditText-->
+<!--                android:drawableStart="@drawable/ic_45_minutes"-->
+<!--                android:drawablePadding="10dp"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:enabled="false"-->
+<!--                android:maxLines="1"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_width="match_parent" />-->
+<!--    </com.google.android.material.textfield.TextInputLayout>-->
+<!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            android:hint="سنة الاصابة"-->
+<!--            android:id="@+id/full_name_profile4"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_width="match_parent">-->
+
+<!--            <com.google.android.material.textfield.TextInputEditText-->
+<!--                android:drawableStart="@drawable/ic_45_minutes"-->
+<!--                android:drawablePadding="10dp"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:enabled="false"-->
+<!--                android:maxLines="1"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_width="match_parent" />-->
+<!--    </com.google.android.material.textfield.TextInputLayout>-->
         <com.google.android.material.textfield.TextInputLayout
-            android:hint="Full Name"
-            android:id="@+id/full_name_profile3"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:drawableLeft="@drawable/ic_45_minutes"
-                android:drawablePadding="10dp"
-
-                android:maxLines="1"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent" />
-    </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
-            android:hint="Full Name"
-            android:id="@+id/full_name_profile4"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:drawableLeft="@drawable/ic_45_minutes"
-                android:drawablePadding="10dp"
-
-                android:maxLines="1"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent" />
-    </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
-            android:hint="Full Name"
+            android:hint="الوزن"
             android:id="@+id/full_name_profile5"
             android:layout_height="wrap_content"
             android:layout_width="match_parent">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:drawableLeft="@drawable/ic_45_minutes"
+                android:drawableStart="@drawable/ic_45_minutes"
                 android:drawablePadding="10dp"
-
+                android:textColor="@color/black"
+                android:enabled="false"
                 android:maxLines="1"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent" />
     </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
-            android:hint="Full Name"
+            android:hint="الطول"
             android:id="@+id/full_name_profile6"
             android:layout_height="wrap_content"
             android:layout_width="match_parent">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:drawableLeft="@drawable/ic_45_minutes"
+                android:drawableStart="@drawable/ic_45_minutes"
                 android:drawablePadding="10dp"
-
+                android:textColor="@color/black"
+                android:enabled="false"
                 android:maxLines="1"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent" />
     </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
-            android:hint="Full Name"
-            android:id="@+id/full_name_profile7"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent">
+<!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            android:hint="رقم الهاتف"-->
+<!--            android:id="@+id/full_name_profile7"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_width="match_parent">-->
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:drawableLeft="@drawable/ic_45_minutes"
-                android:drawablePadding="10dp"
-
-                android:maxLines="1"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent" />
-        </com.google.android.material.textfield.TextInputLayout>
+<!--            <com.google.android.material.textfield.TextInputEditText-->
+<!--                android:drawableStart="@drawable/ic_45_minutes"-->
+<!--                android:drawablePadding="10dp"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:enabled="false"-->
+<!--                android:maxLines="1"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_width="match_parent" />-->
+<!--        </com.google.android.material.textfield.TextInputLayout>-->
     </LinearLayout>
 </LinearLayout>

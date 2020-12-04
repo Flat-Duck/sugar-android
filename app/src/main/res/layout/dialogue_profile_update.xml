@@ -7,7 +7,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <com.google.android.material.textfield.TextInputLayout
         android:hint="@string/weight_in_kg"
-        android:id="@+id/full_name_profile1"
+        android:id="@+id/kg"
         android:layout_height="wrap_content"
         android:layout_width="match_parent">
 
@@ -21,7 +21,7 @@
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
         android:hint="@string/height_in_cm"
-        android:id="@+id/full_name_profile2"
+        android:id="@+id/cm"
         android:layout_height="wrap_content"
         android:layout_width="match_parent">
 
@@ -35,7 +35,7 @@
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
         android:hint="@string/password"
-        android:id="@+id/full_name_profile3"
+        android:id="@+id/pass"
         android:layout_height="wrap_content"
         android:layout_width="match_parent">
 
