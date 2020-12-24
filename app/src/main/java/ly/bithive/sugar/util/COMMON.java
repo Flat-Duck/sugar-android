@@ -10,14 +10,12 @@ import java.util.Date;
 
 public class COMMON {
 
-    static public String BASE_URL = "http://192.168.10.134/sugar/public/api/";
+    static public String BASE_URL = "http://192.168.43.18/sugar/public/api/";
     static public String LOGIN_URL = BASE_URL + "login";
     static public String USER_URL = BASE_URL + "user";
     static public String CHATS_URL = BASE_URL + "chats";
     static public String SYNC_URL = BASE_URL + "analysis";
     static public String UPDATE_URL = BASE_URL + "user";
-
-
     static public String USERS_SHARED_PREF = "user_pref";
 
     static public int PRIVATE_MODE = 0;
@@ -66,7 +64,6 @@ public class COMMON {
     static public int BS_LOW_2 = 69;
     static public int AGE_ADULT = 19;
     static public int AGE_OLD = 65;
-
 
     public static String getCurrentDate() {
         Calendar c = Calendar.getInstance();

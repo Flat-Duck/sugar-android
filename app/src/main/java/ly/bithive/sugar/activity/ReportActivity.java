@@ -13,10 +13,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.components.Description;
@@ -25,6 +29,7 @@ import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import com.github.mikephil.charting.charts.PieChart;
 
 import com.github.mikephil.charting.data.Entry;
@@ -32,6 +37,11 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import ly.bithive.sugar.R;
 import ly.bithive.sugar.ReportItem;
 import ly.bithive.sugar.ReportListAdapter;
@@ -41,18 +51,23 @@ import ly.bithive.sugar.util.COMMON;
 import ly.bithive.sugar.util.SqliteHelper;
 
 
+import static ly.bithive.sugar.util.COMMON.BE_HIGH_1;
+import static ly.bithive.sugar.util.COMMON.BE_LOW_1;
 import static ly.bithive.sugar.util.COMMON.KEY_TIME;
 import static ly.bithive.sugar.util.COMMON.KEY_TYPE;
 import static ly.bithive.sugar.util.COMMON.KEY_DURATION;
 import static ly.bithive.sugar.util.COMMON.WAKEUP_TIME;
 import static ly.bithive.sugar.util.SqliteHelper.KEY_DATE;
+import static ly.bithive.sugar.util.SqliteHelper.KEY_GLYCEMIA;
+import static ly.bithive.sugar.util.SqliteHelper.KEY_PERIOD;
 
 public class ReportActivity extends AppCompatActivity {
 
-   // private static final String TAG = ReportActivity.class.getSimpleName();
+    // private static final String TAG = ReportActivity.class.getSimpleName();
     Context context;
-  //  PieChart pieChart;
-SqliteHelper sqliteHelper;
+    //  PieChart pieChart;
+    SqliteHelper sqliteHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,7 +100,7 @@ SqliteHelper sqliteHelper;
         public Fragment getItem(int position) {
             switch (position) {
                 case 1:
-                    return new PieChartReport();
+                    return new PieChartReport(context);
                 case 2:
                     return new LineChartReport(context);
                 case 0:
@@ -152,29 +167,68 @@ SqliteHelper sqliteHelper;
 
     public static class PieChartReport extends Fragment {
         PieChart pieChart;
+        Context mContext;
+        List<PieEntry> yValue;
+        SqliteHelper sqliteHelper;
+        Spinner spinner;
+
+        PieChartReport(Context context) {
+            this.mContext = context;
+        }
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            sqliteHelper = new SqliteHelper(mContext);
             View view = inflater.inflate(R.layout.fragment_pie_report, container, false);
-
             pieChart = view.findViewById(R.id.pieChart);
-
-
-
             pieChart.setDrawHoleEnabled(false);
             Description description = new Description();
             description.setEnabled(false);
             pieChart.setDescription(description);
-            List<PieEntry> yValue = new ArrayList<>();
+            spinner = view.findViewById(R.id.pieSpinner);
+
+            String[] data = {"اسبوع", "اسبوعين"};
+
+            ArrayAdapter adapter = new ArrayAdapter<String>(mContext, R.layout.spinner_item_selected, data);
+            adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+
+            spinner.setAdapter(adapter);
+
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    if (i == 0) {
+                        calculataPie(7);
+
+                    } else {
+                        calculataPie(15);
+                    }
+
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
 
 
-            yValue.add(new PieEntry(50,"مرتفع"));
-            yValue.add(new PieEntry(30,"متالي"));
-            yValue.add(new PieEntry(20,"منخفض"));
+            return view;
+        }
+
+        private void drawPieChart(double i, double i1, double i2) {
+
+            yValue = new ArrayList<>();
+
+            yValue.add(new PieEntry((float) i, "مرتفع"));
+            yValue.add(new PieEntry((float) i1, "متالي"));
+            yValue.add(new PieEntry((float) i2, "منخفض"));
 
             ArrayList<Integer> colors = new ArrayList<>();
-            colors.add(Color.rgb(211,47, 47));
-            colors.add(Color.rgb(56,142, 60));
-            colors.add(Color.rgb(83,109, 254));
+            colors.add(Color.rgb(211, 47, 47));
+            colors.add(Color.rgb(56, 142, 60));
+            colors.add(Color.rgb(83, 109, 254));
             colors.add(R.color.chartOk);
             colors.add(R.color.chartLo);
 
@@ -182,57 +236,75 @@ SqliteHelper sqliteHelper;
             PieDataSet set = new PieDataSet(yValue, "");
             set.setDrawValues(true);
             set.setValueTextSize(28);
-           // set.setValueTe;
+            // set.setValueTe;
             set.setColors(colors);
             set.setValueTextColor(Color.BLACK);
             PieData data = new PieData(set);
             pieChart.setData(data);
             pieChart.invalidate(); // refresh
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//            pieChart.setCenterTextSize(64f);
-//          //  pieChart.setHoleRadius(0f);
-//            pieChart.setCenterTextSizePixels(48);
-//           // pieChart.setTransparentCircleRadius(0f);
-//           // pieChart.texts
-//            drawChart();
-//            pieChart.setUsePercentValues(true);
-//            ArrayList<PieEntry> xvalues = new ArrayList<PieEntry>();
-//            xvalues.add(new PieEntry(50.0f,"libya"));
-//            xvalues.add(new PieEntry(28.2f, "Coventry"));
-//            xvalues.add(new PieEntry(37.9f, "Manchester"));
-//            PieDataSet dataSet = new PieDataSet(xvalues, "");
-//            PieData data = new PieData(dataSet);
-//            //pieChartColor(data,dataSet);
-//            // In Percentage
-//            data.setValueFormatter(new PercentFormatter());
-//
-//            pieChart.setData(data);
-//            //pieChart.setDescription(().setText("ssss"));//iption.text = ""
-//            pieChart.setDrawHoleEnabled(false);
-//            data.setValueTextSize(13f);
-
-            return view;
         }
+
+
+        private void calculataPie(int i) {
+
+            JSONArray reportItems = new JSONArray();
+            int hi = 0, low = 0, mid = 0;
+
+            String value;
+            int limit = (i * 3);
+            int counter = 0;
+            Log.d("Limit", limit + "XXX");
+            List<Integer> values = new ArrayList<Integer>();
+            try (Cursor cursor = sqliteHelper.getAllAnalysis()) {
+                while (cursor.moveToNext()) {
+                    if (cursor != null) {
+                        if (counter == limit) {
+
+                            break;
+
+                        } else {
+
+                            int valueIndex = cursor.getColumnIndexOrThrow(KEY_GLYCEMIA);
+                            value = cursor.getString(valueIndex);
+                            values.add(Integer.parseInt(value));
+                            Log.d("Val", value);
+                            JSONObject analysis = new JSONObject();
+                            try {
+                                analysis.put(KEY_GLYCEMIA, value);
+                                reportItems.put(analysis);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
+            }
+            int factor = values.size();
+            for (int x : values) {
+                if (x >= BE_HIGH_1) {
+                    hi++;
+                    Log.d("HI", hi + "");
+                } else if (x <= BE_LOW_1) {
+                    low++;
+                    Log.d("low", low + "");
+                } else {
+                    mid++;
+                    Log.d("mid", mid + "");
+                }
+            }
+
+            Log.d("FACTOR", factor + "");
+            double LP = (low / Double.parseDouble(String.valueOf(factor))) * 100;
+            double HP = (hi / Double.parseDouble(String.valueOf(factor))) * 100;
+            double MP = (mid / Double.parseDouble(String.valueOf(factor))) * 100;
+
+            Log.d("LOWP", LP + "");
+            Log.d("MIDP", MP + "");
+            Log.d("HIP", HP + "");
+            drawPieChart(HP, MP, LP);
+        }
+
         private void drawChart() {
 //            ArrayList<Entry> entries = new ArrayList<>();
 //            ArrayList<String> dateArray = new ArrayList<>();
@@ -256,7 +328,7 @@ SqliteHelper sqliteHelper;
 //
 //            if (!entries.isEmpty()) {
 
-               // pieChart.getDescription().setText("asdas");
+            // pieChart.getDescription().setText("asdas");
 //            ArrayList<PieEntry> NoOfEmp = new ArrayList<PieEntry>();
 //
 //            NoOfEmp.add(new PieEntry(20f, "Low", Color.BLUE));
@@ -269,7 +341,7 @@ SqliteHelper sqliteHelper;
 //            dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
 //            pieChart.animateXY(2000, 2000);
 
-       //     }
+            //     }
         }
     }
 
@@ -282,13 +354,14 @@ SqliteHelper sqliteHelper;
         LineChartReport(Context context) {
             this.mContext = context;
         }
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View view = inflater.inflate(R.layout.fragment_sport_report, container, false);
 
-             reportItems = new ArrayList<>();
+            reportItems = new ArrayList<>();
             recyclerView = view.findViewById(R.id.rvSportReport);
-            mAdapter = new SportReportAdapter(mContext,reportItems);
+            mAdapter = new SportReportAdapter(mContext, reportItems);
             recyclerView.setHasFixedSize(true);
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mContext);
             recyclerView.setLayoutManager(mLayoutManager);
@@ -300,12 +373,12 @@ SqliteHelper sqliteHelper;
         }
 
         private void PrepareSportReportData() {
-            SqliteHelper  sqliteHelper = new SqliteHelper(getActivity().getApplicationContext());
-            String type,date,time;
+            SqliteHelper sqliteHelper = new SqliteHelper(getActivity().getApplicationContext());
+            String type, date, time;
             int duration;
-           // Cursor cursor = ;
-           // for (cursor.)
-                try (Cursor cursor = sqliteHelper.getAllSports()) {
+            // Cursor cursor = ;
+            // for (cursor.)
+            try (Cursor cursor = sqliteHelper.getAllSports()) {
                 while (cursor.moveToNext()) {
                     if (cursor != null) {
                         int dateIndex = cursor.getColumnIndexOrThrow(KEY_DATE);
@@ -316,12 +389,12 @@ SqliteHelper sqliteHelper;
                         type = cursor.getString(typeIndex);
                         duration = cursor.getInt(durationIndex);
                         time = cursor.getString(timeIndex);
-                        SportReportItem sportReportItem = new SportReportItem(date,String.valueOf(duration),time,type);
+                        SportReportItem sportReportItem = new SportReportItem(date, String.valueOf(duration), time, type);
                         reportItems.add(sportReportItem);
                     }
                 }
 
-                   // Cursor mCursor = db.rawQuery(selectQuery, whereArgs);
+                // Cursor mCursor = db.rawQuery(selectQuery, whereArgs);
 
             }
 
