@@ -39,7 +39,7 @@ public class SqliteHelper extends SQLiteOpenHelper {
     private static final String KEY_SI = "sleep_insulin";
 
     public static final String KEY_PERIOD = "period";
-    private static final String KEY_CURE = "cure";
+    public static final String KEY_CURE = "cure";
     public static final String KEY_GLYCEMIA = "glycemia";
     private static final String KEY_INSULIN = "insulin";
 

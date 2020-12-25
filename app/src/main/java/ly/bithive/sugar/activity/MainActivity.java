@@ -10,8 +10,10 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Build;
 import android.text.Html;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -37,16 +39,24 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import ly.bithive.sugar.util.SetupActions;
 import ly.bithive.sugar.util.SqliteHelper;
 import ly.bithive.sugar.util.COMMON;
 import ly.bithive.sugar.util.Helper;
 import ly.bithive.sugar.R;
+
+import static ly.bithive.sugar.util.COMMON.BE_HIGH_1;
+import static ly.bithive.sugar.util.COMMON.BE_LOW_1;
+import static ly.bithive.sugar.util.SqliteHelper.KEY_GLYCEMIA;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -68,6 +78,8 @@ private long wakeupTime;
     private Helper helper;
     ImageView btnUser;
     String sDate;
+    TextView acu;
+
 
     public void showBottomSheetDialog() {
         View view = getLayoutInflater().inflate(R.layout.bottom_sheet_shot_fragment, null);
@@ -76,6 +88,7 @@ private long wakeupTime;
         textDate = view.findViewById(R.id.shotDate);
         measureSpinnerTime = view.findViewById(R.id.spPeriod);
         measureSpinnerCure = view.findViewById(R.id.spCure);
+
         etGlycemia = view.findViewById(R.id.etGlycemia);
         addBtn = view.findViewById(R.id.btnAdd);
         btnWakeUpTime = view.findViewById(R.id.btnWakeUpTime);
@@ -248,6 +261,7 @@ private long wakeupTime;
         setupActions = new SetupActions(this);
         sqliteHelper = new SqliteHelper(this);
         btnUser = findViewById(R.id.btnProfile);
+        acu = findViewById(R.id.textView2);
         btnUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -297,6 +311,33 @@ private long wakeupTime;
         cvMessaging.setOnClickListener(this);
         CardView cvAdvice = findViewById(R.id.cvAdvice);
         cvAdvice.setOnClickListener(this);
+        calCulateACU();
+    }
+
+    private void calCulateACU() {
+
+        String value;
+
+        int counter = 0,eAG=0;
+        try (Cursor cursor = sqliteHelper.getAllAnalysis()) {
+            while (cursor.moveToNext()) {
+                if (cursor != null) {
+                    if (counter == 30) {
+
+                        break;
+
+                    } else {
+
+                        int valueIndex = cursor.getColumnIndexOrThrow(KEY_GLYCEMIA);
+                        value = cursor.getString(valueIndex);
+                        eAG = eAG+  Integer.parseInt(value);
+                    }
+                }
+            }
+        }
+
+        double A1C  = (46.7 + (eAG/counter)) / 28.7;
+        acu.setText("معدل السكر التراكمي"+A1C);
     }
 
     @Override

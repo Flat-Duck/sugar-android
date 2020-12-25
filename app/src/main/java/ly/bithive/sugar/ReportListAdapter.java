@@ -15,21 +15,17 @@ public class ReportListAdapter extends RecyclerView.Adapter<ReportListAdapter.My
     private List<ReportItem> reportItems;
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView Date,MG, NG, EG, SG,MI,NI,EI,SI;
+        TextView Date,Cure, Period, Value;
 
 
         MyViewHolder(View view) {
             super(view);
 
             Date = view.findViewById(R.id.date);
-            MG = view.findViewById(R.id.morningGlycemia);
-            NG = view.findViewById(R.id.noonGlycemia);
-            EG = view.findViewById(R.id.eveningGlycemia);
-            SG = view.findViewById(R.id.sleepGlycemia);
-            MI = view.findViewById(R.id.morningInsulin);
-            NI = view.findViewById(R.id.noonInsulin);
-            EI = view.findViewById(R.id.eveningInsulin);
-            SI = view.findViewById(R.id.sleepInsulin);
+            Cure = view.findViewById(R.id.cure);
+            Period = view.findViewById(R.id.period);
+            Value = view.findViewById(R.id.value);
+
 
 
         }
@@ -55,14 +51,10 @@ public class ReportListAdapter extends RecyclerView.Adapter<ReportListAdapter.My
     public void onBindViewHolder(MyViewHolder holder, final int position) {
         final ReportItem reportItem = reportItems.get(position);
         holder.Date.setText(reportItem.getDate());
-        holder.MG.setText(reportItem.getMorningGlycemia());
-        holder.NG.setText(reportItem.getNoonGlycemia());
-        holder.EG.setText(reportItem.getEveningGlycemia());
-        holder.SG.setText(reportItem.getSleepGlycemia());
-        holder.MI.setText(reportItem.getMorningInsulin());
-        holder.NI.setText(reportItem.getNoonInsulin());
-        holder.EI.setText(reportItem.getEveningInsulin());
-        holder.SI.setText(reportItem.getSleepInsulin());
+        holder.Cure.setText(reportItem.getCure());
+        holder.Value.setText(reportItem.getValue());
+        holder.Period.setText(reportItem.getPeriod());
+
     }
 
     @Override
