@@ -61,17 +61,17 @@ import static ly.bithive.sugar.util.SqliteHelper.KEY_GLYCEMIA;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     Spinner measureSpinnerTime, measureSpinnerCure;
-   // TextInputEditText txtTime;
-private long wakeupTime;
+    // TextInputEditText txtTime;
+    private long wakeupTime;
     Button addBtn;
     private int mHour, mMinute;
     TextInputLayout etInsulin, etGlycemia;
     private Context context;
     SetupActions setupActions;
     SqliteHelper sqliteHelper;
-    ImageButton btnWakeUpTime,btnShotDate;
-    private int year, month, day,sPeriod;
-    TextInputLayout etWakeUpTime,textDate;
+    ImageButton btnWakeUpTime, btnShotDate;
+    private int year, month, day, sPeriod;
+    TextInputLayout etWakeUpTime, textDate;
     private int totalIntake = 0;
     private SharedPreferences sharedPref;
     private boolean doubleBackToExitPressedOnce = false;
@@ -110,7 +110,7 @@ private long wakeupTime;
                         time.set(Calendar.YEAR, thisYear);
                         sDate = String.format("%02d-%02d-%02d", thisYear, thisMonth, dayOfMonth);
                         textDate.getEditText().setText(sDate);
-                      //  Toast.makeText(getApplicationContext(), sTime, Toast.LENGTH_LONG).show();
+                        //  Toast.makeText(getApplicationContext(), sTime, Toast.LENGTH_LONG).show();
 
                     }
                 }, year, month, day);
@@ -129,7 +129,7 @@ private long wakeupTime;
                     @SuppressLint("DefaultLocale")
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        setWakeUpTime(selectedHour,selectedMinute);
+                        setWakeUpTime(selectedHour, selectedMinute);
                         Calendar time = Calendar.getInstance();
                         time.set(Calendar.HOUR_OF_DAY, selectedHour);
                         time.set(Calendar.MINUTE, selectedMinute);
@@ -142,21 +142,21 @@ private long wakeupTime;
             }
         });
 
-      //  etInsulin = view.findViewById(R.id.etInsulin);
+        //  etInsulin = view.findViewById(R.id.etInsulin);
 
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getApplicationContext(), textDate.getEditText().getText().toString(), Toast.LENGTH_LONG).show();
-                if(etGlycemia.getEditText().getText().toString().equals("")) {
+                if (etGlycemia.getEditText().getText().toString().equals("")) {
                     Toast.makeText(getApplicationContext(), "املء الفراغات", Toast.LENGTH_LONG).show();
                     return;
                 }
                 int glycemia = Integer.parseInt(etGlycemia.getEditText().getText().toString());
 
-                sqliteHelper.insertShot(textDate.getEditText().getText().toString(),etWakeUpTime.getEditText().getText().toString(),
+                sqliteHelper.insertShot(textDate.getEditText().getText().toString(), etWakeUpTime.getEditText().getText().toString(),
                         etGlycemia.getEditText().getText().toString(),
-                       // etInsulin.getEditText().getText().toString(),
+                        // etInsulin.getEditText().getText().toString(),
                         measureSpinnerTime.getSelectedItem().toString(),
                         measureSpinnerCure.getSelectedItem().toString());
                 boolean exit = false;
@@ -224,8 +224,10 @@ private long wakeupTime;
         dialog.setContentView(view);
         dialog.show();
     }
+
     private void setWakeUpTime(int selectedHour, int selectedMinute) {
     }
+
     private void showAlertMsg(int ttl, int msg, String color) {
         int bg;
         switch (color) {
@@ -265,12 +267,12 @@ private long wakeupTime;
         btnUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this,ProfileActivity.class));
+                startActivity(new Intent(MainActivity.this, ProfileActivity.class));
             }
         });
         helper = new Helper();
         context = this;
-     //   Button test_button = (Button) findViewById(R.id.button_test);
+        //   Button test_button = (Button) findViewById(R.id.button_test);
 
 
 //        test_button.setOnClickListener(new View.OnClickListener() {
@@ -280,7 +282,6 @@ private long wakeupTime;
 //
 //            }
 //        });
-
 
 
         sharedPref = getSharedPreferences(COMMON.USERS_SHARED_PREF, COMMON.PRIVATE_MODE);
@@ -318,7 +319,7 @@ private long wakeupTime;
 
         String value;
 
-        int counter = 0,eAG=0;
+        int counter = 0, eAG = 0;
         try (Cursor cursor = sqliteHelper.getAllAnalysis()) {
             while (cursor.moveToNext()) {
                 if (cursor != null) {
@@ -330,14 +331,16 @@ private long wakeupTime;
 
                         int valueIndex = cursor.getColumnIndexOrThrow(KEY_GLYCEMIA);
                         value = cursor.getString(valueIndex);
-                        eAG = eAG+  Integer.parseInt(value);
+                        eAG = eAG + Integer.parseInt(value);
                     }
                 }
             }
         }
-
-        double A1C  = (46.7 + (eAG/counter)) / 28.7;
-        acu.setText("معدل السكر التراكمي"+A1C);
+        double A1C = 0;
+        if (counter == 0) {
+            A1C = (46.7 + (eAG / counter)) / 28.7;
+        }
+        acu.setText("معدل السكر التراكمي" + A1C);
     }
 
     @Override
@@ -387,9 +390,10 @@ private long wakeupTime;
     }
 
     private void showStatActivity() {
-       // startActivity(new Intent(MainActivity.this, StatsActivity.class));
+        // startActivity(new Intent(MainActivity.this, StatsActivity.class));
         showSportsAlert();
     }
+
     private void showMessageActivity() {
         startActivity(new Intent(MainActivity.this, MessagingActivity.class));
     }
@@ -408,25 +412,25 @@ private long wakeupTime;
         layout.setLayoutParams(params);
         layout.setOrientation(LinearLayout.VERTICAL);
         //Add Views to the layout
-        String[] advices = { "لاهتمام بنظافة القدمين يوميًا وخصوصًا بين الأصابع لمنع الجراثيم والبكتيريا التى تؤدى إلى بتر القدمين، مع عدم المشى حافيا",
+        String[] advices = {"لاهتمام بنظافة القدمين يوميًا وخصوصًا بين الأصابع لمنع الجراثيم والبكتيريا التى تؤدى إلى بتر القدمين، مع عدم المشى حافيا",
                 "الحد من تناول الأطعمة الدسمة التى تحتوى على نسبة دهون عالية منعا للإصابة بالسمنة.",
                 "الابتعاد عن الحلويات واستبدالها بالعصائر الطبيعية.",
                 "الإكثار فى تناول الخضراوات والفواكه، حيث إنها تساعد على تعزيز صحة الجسم وحمايته من الأمراض.",
                 "مراقبة مستوى السكر كل يوم مع اتباع نظام غذائى صحى. ",
                 "يجب أن يهتم مريض السكر بوجبة الإفطار، لتجنب الإصابة بغيبوبة السكر ومضاعفاتها. ",
                 "تحديد مواعيد ثابتة للطعام على أن تكون خمس وجبات  على مدار اليوم بكميات قليلة ، وغنيه بالعناصر الغذائية المختلفة.",
-                 "ممارسة النشاط البدنى والرياضة سواء من خلال المشى والحركة والسباحة  أو التمارين الرياضية فى الجيم.",
-                 "الابتعاد عن التدخين، حيث أنه يؤثر على صحة القلب والأوعية الدموية.",
-                 "تجنب المشروبات الغازية والكحولية نظرا لاحتوائها على نسبة عالية من السكريات والمواد الملونة  التى تضر الصحة.",
-                 "الإكثار فى شرب المياه على إلا تقل عن 2 لتر مياه فى اليوم لتحسين وظائف الجسم.",
-                 "النوم عدد ساعات كافيه لتجنب الأرق والتوتر.",
-                 "الابتعاد عن الضغوط النفسية التى تؤثر على الصحة وتحديد يوم فى الأسبوع للتنزه أو زيارة الأقارب والأصدقاء.",
-                 "الاهتمام بصحة الاسنان واللثة للكشف على أى مشاكل أخرى.",
-                 "زيارة طبيب العيون باستمرار لتجنب الاصابة باى مضاعفات للعين نتيجة مرض السكر.",
-                 "يجب توفير جهاز قياس السكر فى الأماكن التى يتواجد فيها المريض سواء المنزل أو العمل."};
-        for(int i =0;i< advices.length; i++) {
-            TextView textview =  new TextView(this);
-            String advice = String.valueOf(Html.fromHtml("<li>"+advices[i]+"</li>",1));
+                "ممارسة النشاط البدنى والرياضة سواء من خلال المشى والحركة والسباحة  أو التمارين الرياضية فى الجيم.",
+                "الابتعاد عن التدخين، حيث أنه يؤثر على صحة القلب والأوعية الدموية.",
+                "تجنب المشروبات الغازية والكحولية نظرا لاحتوائها على نسبة عالية من السكريات والمواد الملونة  التى تضر الصحة.",
+                "الإكثار فى شرب المياه على إلا تقل عن 2 لتر مياه فى اليوم لتحسين وظائف الجسم.",
+                "النوم عدد ساعات كافيه لتجنب الأرق والتوتر.",
+                "الابتعاد عن الضغوط النفسية التى تؤثر على الصحة وتحديد يوم فى الأسبوع للتنزه أو زيارة الأقارب والأصدقاء.",
+                "الاهتمام بصحة الاسنان واللثة للكشف على أى مشاكل أخرى.",
+                "زيارة طبيب العيون باستمرار لتجنب الاصابة باى مضاعفات للعين نتيجة مرض السكر.",
+                "يجب توفير جهاز قياس السكر فى الأماكن التى يتواجد فيها المريض سواء المنزل أو العمل."};
+        for (int i = 0; i < advices.length; i++) {
+            TextView textview = new TextView(this);
+            String advice = String.valueOf(Html.fromHtml("<li>" + advices[i] + "</li>", 1));
             textview.setText(advice);
             layout.addView(textview);
         }
@@ -456,9 +460,9 @@ private long wakeupTime;
         String[] sportAdvices = getResources().getStringArray(R.array.sport_alert_list);
 
 
-        for(int i =0;i< sportAdvices.length; i++) {
-            TextView textview =  new TextView(this);
-            String advice = String.valueOf(Html.fromHtml("<li>"+sportAdvices[i]+"</li>",1));
+        for (int i = 0; i < sportAdvices.length; i++) {
+            TextView textview = new TextView(this);
+            String advice = String.valueOf(Html.fromHtml("<li>" + sportAdvices[i] + "</li>", 1));
             textview.setText(advice);
             layout.addView(textview);
         }
@@ -484,7 +488,7 @@ private long wakeupTime;
         AlertDialog alert = builder.create();
         alert.show();
 
-        }
+    }
 
 
     @Override
