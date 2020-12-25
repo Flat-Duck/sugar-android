@@ -332,15 +332,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         int valueIndex = cursor.getColumnIndexOrThrow(KEY_GLYCEMIA);
                         value = cursor.getString(valueIndex);
                         eAG = eAG + Integer.parseInt(value);
+                        counter++;
                     }
                 }
             }
         }
         double A1C = 0;
-        if (counter == 0) {
+        if (counter != 0) {
             A1C = (46.7 + (eAG / counter)) / 28.7;
         }
-        acu.setText("معدل السكر التراكمي" + A1C);
+        acu.setText("معدل السكر التراكمي" + String.format("%.1f", A1C));
     }
 
     @Override

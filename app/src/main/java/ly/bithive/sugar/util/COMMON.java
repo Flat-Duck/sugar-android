@@ -10,7 +10,7 @@ import java.util.Date;
 
 public class COMMON {
 
-    static public String BASE_URL = "http://192.168.43.18/sugar/public/api/";
+    static public String BASE_URL = "http://192.168.10.134/sugar/public/api/";
     static public String LOGIN_URL = BASE_URL + "login";
     static public String USER_URL = BASE_URL + "user";
     static public String CHATS_URL = BASE_URL + "chats";
